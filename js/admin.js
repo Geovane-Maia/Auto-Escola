@@ -141,27 +141,33 @@
   const formPergunta = document.getElementById('form-pergunta');
   let editandoPerguntaId = null;
   let imagemPergunta = '';
-  const PLACAS_PRESET = ['seta', 'proibido', 'triangulo', 'estacionamento'];
+  // chaves aceitas: foto enviada (data:/http) ou qualquer placa do mapa global PLACAS
+  function ehPreset(v) {
+    return !!v && typeof PLACAS !== 'undefined' && Object.prototype.hasOwnProperty.call(PLACAS, v);
+  }
 
   function atualizaPreviewImagem() {
     const img = document.getElementById('preview-perg-imagem');
     const btnRem = document.getElementById('btn-remover-imagem');
+    const svgBox = document.getElementById('preview-svg');
     if (!img || !btnRem) return;
+    if (svgBox) svgBox.innerHTML = '';
     if (imagemPergunta && (imagemPergunta.startsWith('data:') || imagemPergunta.startsWith('http') || imagemPergunta.startsWith('blob:'))) {
       img.src = imagemPergunta;
       img.hidden = false;
       btnRem.hidden = false;
-    } else if (imagemPergunta && PLACAS_PRESET.includes(imagemPergunta)) {
+    } else if (imagemPergunta && ehPreset(imagemPergunta)) {
       img.removeAttribute('src');
       img.hidden = true;
       btnRem.hidden = false;
+      if (svgBox && typeof PLACAS !== 'undefined' && PLACAS[imagemPergunta]) svgBox.innerHTML = PLACAS[imagemPergunta];
     } else {
       img.removeAttribute('src');
       img.hidden = true;
       btnRem.hidden = true;
     }
     const preset = document.getElementById('perg-placa-preset');
-    if (preset) preset.value = PLACAS_PRESET.includes(imagemPergunta) ? imagemPergunta : '';
+    if (preset) preset.value = ehPreset(imagemPergunta) ? imagemPergunta : '';
   }
 
   function processaArquivoImagem(arquivo) {

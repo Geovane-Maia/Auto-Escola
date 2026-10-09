@@ -127,6 +127,7 @@
         <label>Imagem da placa <span class="texto-suave">(opcional — para Sinalização)</span></label>
         <div class="upload-imagem">
           <img id="preview-perg-imagem" class="preview-imagem" hidden alt="Prévia da placa">
+          <div id="preview-svg" class="preview-svg"></div>
           <div class="linha-acoes" style="margin-top:0">
             <label class="btn btn-secundario btn-pequeno" style="margin:0;cursor:pointer;">
               📷 Subir imagem <input type="file" id="perg-imagem" accept="image/*" hidden>
@@ -137,10 +138,42 @@
           <label for="perg-placa-preset" style="margin-top:10px;">Ou use uma placa padrão</label>
           <select id="perg-placa-preset" class="input-busca" style="width:100%;min-width:0;">
             <option value="">Nenhuma</option>
-            <option value="seta">Seta — sentido obrigatório seguir em frente</option>
-            <option value="proibido">Sentido proibido</option>
-            <option value="triangulo">Advertência (triângulo)</option>
-            <option value="estacionamento">Estacionamento (P)</option>
+            <optgroup label="Regulamentação">
+              <option value="pare">PARE (parada obrigatória)</option>
+              <option value="proibido">Sentido proibido</option>
+              <option value="velocidade-60">Velocidade máxima 60 km/h</option>
+              <option value="proibido-automotores">Proibido veículos automotores</option>
+              <option value="proibido-motos">Proibido motos/motonetas</option>
+              <option value="proibido-onibus">Proibido ônibus</option>
+              <option value="proibido-caminhoes">Proibido caminhões</option>
+              <option value="proibido-pedestres">Proibido pedestres</option>
+              <option value="proibido-estacionar">Proibido estacionar</option>
+              <option value="ultrapassar-proibido">Ultrapassagem proibida</option>
+              <option value="vire-esquerda">Vire à esquerda</option>
+              <option value="siga-frente">Siga em frente</option>
+              <option value="siga-ou-esquerda">Siga ou vire à esquerda</option>
+              <option value="seta">Sentido obrigatório (seta)</option>
+              <option value="bicicleta-exclusiva">Circulação exclusiva de bicicletas</option>
+              <option value="estacionamento">Estacionamento (P)</option>
+            </optgroup>
+            <optgroup label="Advertência">
+              <option value="triangulo">Advertência geral (triângulo)</option>
+              <option value="curva-perigosa">Curva perigosa</option>
+              <option value="travessia-pedestres">Travessia de pedestres</option>
+              <option value="escolares">Área escolar</option>
+              <option value="depressao">Depressão na pista</option>
+              <option value="semaforo-frente">Semáforo à frente</option>
+              <option value="tratores">Tratores/máquinas agrícolas</option>
+              <option value="trem-sem-cancela">Trem sem cancela</option>
+              <option value="cruz-santo-andre">Cruz de Santo André</option>
+              <option value="animais">Animais na via</option>
+              <option value="parada-obrigatoria">Parada obrigatória à frente</option>
+              <option value="mao-dupla">Mão dupla adiante</option>
+            </optgroup>
+            <optgroup label="Indicação / identificação">
+              <option value="retorno">Retorno</option>
+              <option value="placa-mercosul">Placa Mercosul (identificação)</option>
+            </optgroup>
           </select>
         </div>
 
@@ -157,6 +190,7 @@
 
   <script src="js/config.js"></script>
   <script src="js/banco-questoes.js"></script>
+  <script src="js/placas.js"></script>
   <script src="js/db.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/admin.js"></script>

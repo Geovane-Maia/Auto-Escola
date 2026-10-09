@@ -247,7 +247,7 @@ const PERGUNTAS_SEED = [
   { categoria: 'Sinalização', enunciado: 'O sinal triangular com borda vermelha é de:', imagem: 'triangulo', alternativas: ['Advertência', 'Obrigação', 'Indicação', 'Serviços'], correta: 0 },
   { categoria: 'Sinalização', enunciado: 'A placa azul quadrada com a letra "P" indica:', imagem: 'estacionamento', alternativas: ['Proibido estacionar', 'Estacionamento permitido', 'Parada obrigatória', 'Ponto de ônibus'], correta: 1 },
   { categoria: 'Sinalização', enunciado: 'O piso com faixas diagonais brancas (zebrado) junto à borda da via indica:', alternativas: ['Área de lazer', 'Faixa de retenção — não estacionar nem parar', 'Faixa de pedestres', 'Entrada de garagem'], correta: 1 },
-  { categoria: 'Sinalização', enunciado: 'A placa vermelha redonda com um caminhão preto e uma faixa vermelha significa:', alternativas: ['Proibido o trânsito de caminhões', 'Área de carga', 'Estacionamento para caminhões', 'Via de caminhões preferencial'], correta: 0 },
+  { categoria: 'Sinalização', enunciado: 'A placa vermelha redonda com um caminhão preto e uma faixa vermelha significa:', imagem: 'proibido-caminhoes', alternativas: ['Proibido o trânsito de caminhões', 'Área de carga', 'Estacionamento para caminhões', 'Via de caminhões preferencial'], correta: 0 },
 
   /* Direção Defensiva (6) */
   { categoria: 'Direção Defensiva', enunciado: 'A distância de seguimento segura depende de:', alternativas: ['Somente da velocidade', 'Velocidade, tempo de reação e condições do piso', 'Apenas do tipo de veículo', 'Da vontade do motorista'], correta: 1 },

@@ -17,6 +17,7 @@ auto_escola/
 ├── js/
 │   ├── config.js         → Credenciais do Supabase (preencher para usar o banco)
 │   ├── banco-questoes.js → 135 questões do Banco Nacional (DETRAN/CE · Centec)
+│   ├── placas.js         → 30 placas de trânsito em SVG (regulamentação, advertência, indicação)
 │   ├── db.js             → Camada de dados (Supabase REST ou localStorage) + seed sem duplicar
 │   ├── auth.js           → Validação de CPF + sessão
 │   ├── main.js           → Login com teclado virtual
@@ -110,7 +111,7 @@ Acesso: link "Área do administrador" no rodapé do login.
 
 - **Alunos:** criar, editar (nome, CPF, turma, ativo), excluir, buscar.
 - **Perguntas:** criar, editar, excluir; categorias: Legislação, Sinalização, Direção Defensiva, Primeiros Socorros, Mecânica Básica.
-- **Imagem da placa:** no modal da pergunta, botão `📷 Subir imagem` (PNG/JPG até 2MB, reduzida auto a 600px) ou placa padrão (seta, proibido, triângulo, P). A imagem aparece na Zona de Contexto da prova.
+- **Imagem da placa:** 31 questões exibem a placa em SVG na Zona de Contexto (e no gabarito). No modal da pergunta, botão `📷 Subir imagem` (PNG/JPG até 2MB, reduzida auto a 600px) ou escolha uma das 30 placas padrão no seletor.
 - **Resultados:** ver todos, excluir individual ou limpar tudo.
 - **Configurações:** trocar senha do admin; exportar backup JSON (importação apenas no modo local).
 

@@ -24,13 +24,7 @@
   const LETRAS = ['A', 'B', 'C', 'D', 'E'];
   const nomeCategoria = cat === 'todas' ? 'Completo' : cat;
 
-  /* SVGs de placas para questões de Sinalização */
-  const PLACAS = {
-    seta: '<svg viewBox="0 0 100 100" width="86" height="86"><circle cx="50" cy="50" r="44" fill="#fff" stroke="#c0392b" stroke-width="9"/><path d="M50 24v38M50 24l-13 15M50 24l13 15" stroke="#111" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-    proibido: '<svg viewBox="0 0 100 100" width="86" height="86"><circle cx="50" cy="50" r="44" fill="#c0392b"/><rect x="14" y="43" width="72" height="14" rx="3" fill="#fff"/></svg>',
-    triangulo: '<svg viewBox="0 0 100 100" width="86" height="86"><path d="M50 12 L92 88 H8 Z" fill="#fff" stroke="#c0392b" stroke-width="9" stroke-linejoin="round"/><rect x="45.5" y="38" width="9" height="26" rx="4.5" fill="#111"/><circle cx="50" cy="76" r="5.5" fill="#111"/></svg>',
-    estacionamento: '<svg viewBox="0 0 100 100" width="86" height="86"><rect x="8" y="8" width="84" height="84" rx="12" fill="#2a5db0"/><text x="50" y="72" font-size="58" font-weight="800" text-anchor="middle" fill="#fff" font-family="Arial">P</text></svg>'
-  };
+  /* PLACAS vem de js/placas.js (mapa global de SVGs padrão CTB) */
 
   /* escapa HTML do enunciado/alt vindos do banco */
   function escHtml(s) {
@@ -252,9 +246,10 @@
         const certo = estado[i].confirmada && estado[i].selecionada === p.correta;
         return `
           <div class="gabarito-item ${certo ? 'certo' : 'errado'}">
-            <h4>${i + 1}. ${p.enunciado}</h4>
-            <p class="correto-texto">✔ Resposta correta: ${LETRAS[p.correta]}) ${p.alternativas[p.correta]}</p>
-            ${certo ? '' : `<p class="sua-texto">✘ Sua resposta: ${estado[i].selecionada !== null ? LETRAS[estado[i].selecionada] + ') ' + p.alternativas[estado[i].selecionada] : 'em branco'}</p>`}
+            <h4>${i + 1}. ${escHtml(p.enunciado)}</h4>
+            ${imagemQuestaoHTML(p)}
+            <p class="correto-texto">✔ Resposta correta: ${LETRAS[p.correta]}) ${escHtml(p.alternativas[p.correta])}</p>
+            ${certo ? '' : `<p class="sua-texto">✘ Sua resposta: ${estado[i].selecionada !== null ? LETRAS[estado[i].selecionada] + ') ' + escHtml(p.alternativas[estado[i].selecionada]) : 'em branco'}</p>`}
           </div>
         `;
       }).join('');
