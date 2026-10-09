@@ -117,6 +117,15 @@ Acesso: link "Área do administrador" no rodapé do login.
 
 O arquivo `Guia-do-Aluno-ABCDETRAN.pdf` traz toda a orientação de uso da plataforma de questionário (sem a parte de administrador): 5 etapas, 3 botões, teclado de CPF, 3 zonas da prova, regra de ouro, pendências, conclusão e check-list.
 
+## 📊 Apresentação interativa (PowerPoint)
+
+O arquivo `Apresentacao-Interativa-ABCDETRAN.pptx` (16 slides) ensina a usar o sistema de forma interativa:
+
+- **Menu clicável** com 6 opções que saltam direto ao assunto.
+- **Quiz com escolhas:** 2 perguntas de múltipla escolha; cada alternativa é clicável e leva a um feedback de acerto (verde) ou erro (vermelho), com botões `Tentar de novo`, `Próxima` e `MENU`.
+- Navegação completa: `COMEÇAR`, `AVANÇAR`, `MENU` e `RECOMEÇAR` em todas as telas.
+- Para apresentar: abra no PowerPoint e use o modo **Apresentação de Slides (F5)** — os cliques nos botões navegam entre os slides.
+
 ## ⬆️ Como subir para o GitHub
 
 ```bash
