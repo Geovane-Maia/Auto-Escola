@@ -17,8 +17,11 @@ auto_escola/
 ├── js/
 │   ├── config.js         → Credenciais do Supabase (preencher para usar o banco)
 │   ├── banco-questoes.js → 135 questões do Banco Nacional (DETRAN/CE · Centec)
-│   ├── placas.js         → 30 placas de trânsito em SVG (regulamentação, advertência, indicação)
+│   ├── placas.js         → Mapa das 30 placas (arquivos em assets/placas/)
 │   ├── db.js             → Camada de dados (Supabase REST ou localStorage) + seed sem duplicar
+├── assets/
+│   ├── logo.jpeg         → Logo oficial da Auto Escola Quixelô
+│   └── placas/           → 30 placas: diagramas oficiais do CTB (Wikimedia Commons, R/A) + 5 ilustrativas em SVG
 │   ├── auth.js           → Validação de CPF + sessão
 │   ├── main.js           → Login com teclado virtual
 │   ├── painel.js         → Cadernos e histórico (nome, turma, último acesso, IP)
@@ -127,6 +130,10 @@ O arquivo `Apresentacao-Interativa-ABCDETRAN.pptx` (16 slides) ensina a usar o s
 - **Quiz com escolhas:** 2 perguntas de múltipla escolha; cada alternativa é clicável e leva a um feedback de acerto (verde) ou erro (vermelho), com botões `Tentar de novo`, `Próxima` e `MENU`.
 - Navegação completa: `COMEÇAR`, `AVANÇAR`, `MENU` e `RECOMEÇAR` em todas as telas.
 - Para apresentar: abra no PowerPoint e use o modo **Apresentação de Slides (F5)** — os cliques nos botões navegam entre os slides.
+
+## 🪧 Créditos das placas
+
+As imagens de sinalização em `assets/placas/` misturam diagramas oficiais do CTB (R-1, R-6a, R-7, R-9, R-10, R-25a, R-25c, R-26, R-29, R-37, R-38, A-2a, A-14, A-15, A-19, A-25, A-31, A-35, A-39, A-32b, A-33b + foto de placa Mercosul, via Wikimedia Commons) com ilustrativas em SVG próprio no traço oficial para as demais (o Wikimedia bloqueou novos downloads deste IP; R-3 e R-34 do Commons divergiam das legendas e foram refeitos).
 
 ## ⬆️ Como subir para o GitHub
 

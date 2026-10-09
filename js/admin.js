@@ -149,18 +149,15 @@
   function atualizaPreviewImagem() {
     const img = document.getElementById('preview-perg-imagem');
     const btnRem = document.getElementById('btn-remover-imagem');
-    const svgBox = document.getElementById('preview-svg');
     if (!img || !btnRem) return;
-    if (svgBox) svgBox.innerHTML = '';
-    if (imagemPergunta && (imagemPergunta.startsWith('data:') || imagemPergunta.startsWith('http') || imagemPergunta.startsWith('blob:'))) {
+    if (imagemPergunta && /^(data:image|https?:|blob:)/.test(imagemPergunta)) {
       img.src = imagemPergunta;
       img.hidden = false;
       btnRem.hidden = false;
     } else if (imagemPergunta && ehPreset(imagemPergunta)) {
-      img.removeAttribute('src');
-      img.hidden = true;
+      img.src = 'assets/placas/' + PLACAS[imagemPergunta];
+      img.hidden = false;
       btnRem.hidden = false;
-      if (svgBox && typeof PLACAS !== 'undefined' && PLACAS[imagemPergunta]) svgBox.innerHTML = PLACAS[imagemPergunta];
     } else {
       img.removeAttribute('src');
       img.hidden = true;
@@ -243,7 +240,7 @@
           </div>
         </div>
         <p class="enunciado-admin">${esc(p.enunciado)}</p>
-        ${p.imagem ? (p.imagem.startsWith('data:') || p.imagem.startsWith('http') ? `<img src="${p.imagem}" alt="Placa" class="thumb-pergunta">` : `<span class="categoria-tag">🪧 Placa padrão: ${esc(p.imagem)}</span>`) : ''}
+        ${p.imagem ? (/^(data:image|https?:|blob:)/.test(p.imagem) ? `<img src="${p.imagem}" alt="Placa" class="thumb-pergunta">` : (typeof PLACAS !== 'undefined' && PLACAS[p.imagem] ? `<img src="assets/placas/${PLACAS[p.imagem]}" alt="Placa" class="thumb-pergunta">` : `<span class="categoria-tag">🪧 Placa: ${esc(p.imagem)}</span>`)) : ''}
         <ul class="lista-alternativas">
           ${p.alternativas.map((alt, i) => `
             <li class="${i === p.correta ? 'correta' : ''}">${LETRAS[i]}) ${esc(alt)} ${i === p.correta ? '✔' : ''}</li>

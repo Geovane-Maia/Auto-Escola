@@ -31,12 +31,14 @@
     return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   }
 
-  /* imagem da questão: placa padrão (SVG) ou foto enviada pelo admin */
+  /* imagem da questão: foto enviada pelo admin ou placa de assets/placas/ */
   function imagemQuestaoHTML(p) {
     if (!p.imagem) return '';
-    if (PLACAS[p.imagem]) return `<div class="img-questao">${PLACAS[p.imagem]}</div>`;
     if (/^(data:image|https?:|blob:)/.test(p.imagem)) {
       return `<div class="img-questao"><img src="${p.imagem}" alt="Placa de trânsito" loading="lazy"></div>`;
+    }
+    if (typeof PLACAS !== 'undefined' && PLACAS[p.imagem]) {
+      return `<div class="img-questao"><img src="assets/placas/${PLACAS[p.imagem]}" alt="Placa de trânsito" loading="lazy"></div>`;
     }
     return '';
   }

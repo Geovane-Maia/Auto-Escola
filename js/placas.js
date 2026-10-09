@@ -1,51 +1,42 @@
 /* =========================================================
-   Quixelô — Placas de trânsito em SVG (traço próprio,
-   padrão visual do CTB: regulamentação, advertência e
-   indicação). Usado na prova (simulado.js) e na prévia
-   do admin (admin.js). Carregado ANTES de js/db.js.
+   Quixelô — Placas de trânsito (arquivos em assets/placas/)
+   Diagramas oficiais do CTB via Wikimedia Commons
+   (R-1, R-3, R-6a, R-7, R-9, R-10, R-25a, R-25c, R-26, R-29,
+   R-34, R-37, R-38, A-2a, A-14, A-15, A-19, A-25, A-31,
+   A-35, A-39, A-32b, A-33b + foto Mercosul) e 5 ilustrativas
+   em SVG próprio (advertência genérica, estacionamento P,
+   60 km/h, retorno e cruz de Santo André com plaqueta).
+   Chave = código usado no campo `imagem` da questão.
    ========================================================= */
 const PLACAS = {
-  /* ---- presets originais ---- */
-  seta: '<svg viewBox="0 0 100 100" width="86" height="86"><circle cx="50" cy="50" r="44" fill="#fff" stroke="#c0392b" stroke-width="9"/><path d="M50 24v38M50 24l-13 15M50 24l13 15" stroke="#111" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-  proibido: '<svg viewBox="0 0 100 100" width="86" height="86"><circle cx="50" cy="50" r="44" fill="#c0392b"/><rect x="14" y="43" width="72" height="14" rx="3" fill="#fff"/></svg>',
-  advertencia: '<svg viewBox="0 0 100 100" width="86" height="86"><path d="M50 6 L94 50 L50 94 L6 50 Z" fill="#ffcf00" stroke="#111" stroke-width="5" stroke-linejoin="round"/><text x="50" y="70" font-size="48" font-weight="800" text-anchor="middle" fill="#111" font-family="Arial">!</text></svg>',
-  estacionamento: '<svg viewBox="0 0 100 100" width="86" height="86"><rect x="8" y="8" width="84" height="84" rx="12" fill="#2a5db0"/><text x="50" y="72" font-size="58" font-weight="800" text-anchor="middle" fill="#fff" font-family="Arial">P</text></svg>',
-
-  /* ---- regulamentação: círculo branco, borda vermelha ---- */
-  'pare': '<svg viewBox="0 0 100 100" width="86" height="86"><polygon points="66.8,9.3 90.7,33.2 90.7,66.8 66.8,90.7 33.2,90.7 9.3,66.8 9.3,33.2 33.2,9.3" fill="#c0392b" stroke="#fff" stroke-width="4"/><text x="50" y="60" font-size="21" font-weight="800" text-anchor="middle" fill="#fff" font-family="Arial">PARE</text></svg>',
-  'velocidade-60': '<svg viewBox="0 0 100 100" width="86" height="86"><circle cx="50" cy="50" r="44" fill="#fff" stroke="#c0392b" stroke-width="9"/><text x="50" y="60" font-size="32" font-weight="800" text-anchor="middle" fill="#111" font-family="Arial">60</text><text x="50" y="74" font-size="11" font-weight="700" text-anchor="middle" fill="#111" font-family="Arial">km/h</text></svg>',
-  'proibido-automotores': '<svg viewBox="0 0 100 100" width="86" height="86"><circle cx="50" cy="50" r="44" fill="#fff" stroke="#c0392b" stroke-width="9"/><rect x="30" y="44" width="40" height="18" rx="6" fill="#111"/><rect x="36" y="34" width="28" height="12" rx="4" fill="#111"/><circle cx="36" cy="64" r="6" fill="#111"/><circle cx="64" cy="64" r="6" fill="#111"/></svg>',
-  'proibido-motos': '<svg viewBox="0 0 100 100" width="86" height="86"><circle cx="50" cy="50" r="44" fill="#fff" stroke="#c0392b" stroke-width="9"/><circle cx="30" cy="66" r="9" fill="none" stroke="#111" stroke-width="5"/><circle cx="70" cy="66" r="9" fill="none" stroke="#111" stroke-width="5"/><path d="M30 66 L44 48 L60 48 L70 66 M44 48 L40 38 M54 48 L62 40" stroke="#111" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-  'proibido-onibus': '<svg viewBox="0 0 100 100" width="86" height="86"><circle cx="50" cy="50" r="44" fill="#fff" stroke="#c0392b" stroke-width="9"/><rect x="32" y="32" width="36" height="30" rx="5" fill="#111"/><rect x="36" y="36" width="28" height="11" rx="2" fill="#fff"/><circle cx="38" cy="66" r="5" fill="#111"/><circle cx="62" cy="66" r="5" fill="#111"/></svg>',
-  'proibido-caminhoes': '<svg viewBox="0 0 100 100" width="86" height="86"><circle cx="50" cy="50" r="44" fill="#fff" stroke="#c0392b" stroke-width="9"/><rect x="26" y="42" width="30" height="20" rx="3" fill="#111"/><rect x="56" y="48" width="18" height="14" rx="3" fill="#111"/><circle cx="34" cy="66" r="6" fill="#111"/><circle cx="66" cy="66" r="6" fill="#111"/></svg>',
-  'proibido-pedestres': '<svg viewBox="0 0 100 100" width="86" height="86"><circle cx="50" cy="50" r="44" fill="#fff" stroke="#c0392b" stroke-width="9"/><circle cx="50" cy="30" r="7" fill="#111"/><path d="M50 39 V57 M50 46 L38 54 M50 46 L62 54 M50 57 L40 79 M50 57 L60 79" stroke="#111" stroke-width="6" fill="none" stroke-linecap="round"/></svg>',
-  'proibido-estacionar': '<svg viewBox="0 0 100 100" width="86" height="86"><circle cx="50" cy="50" r="44" fill="#fff" stroke="#c0392b" stroke-width="9"/><text x="50" y="70" font-size="52" font-weight="800" text-anchor="middle" fill="#c0392b" font-family="Arial">E</text><path d="M28 30 L72 72" stroke="#c0392b" stroke-width="8" stroke-linecap="round"/></svg>',
-  'ultrapassar-proibido': '<svg viewBox="0 0 100 100" width="86" height="86"><circle cx="50" cy="50" r="44" fill="#fff" stroke="#c0392b" stroke-width="9"/><rect x="20" y="46" width="26" height="14" rx="4" fill="none" stroke="#c0392b" stroke-width="5"/><circle cx="26" cy="63" r="4" fill="#c0392b"/><circle cx="40" cy="63" r="4" fill="#c0392b"/><rect x="54" y="46" width="26" height="14" rx="4" fill="#111"/><circle cx="60" cy="63" r="4" fill="#111"/><circle cx="74" cy="63" r="4" fill="#111"/></svg>',
-  'vire-esquerda': '<svg viewBox="0 0 100 100" width="86" height="86"><circle cx="50" cy="50" r="44" fill="#fff" stroke="#c0392b" stroke-width="9"/><path d="M70 50 H36 M36 50 L50 38 M36 50 L50 62" stroke="#111" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-  'siga-frente': '<svg viewBox="0 0 100 100" width="86" height="86"><circle cx="50" cy="50" r="44" fill="#fff" stroke="#c0392b" stroke-width="9"/><path d="M50 72 V30 M50 30 L38 44 M50 30 L62 44" stroke="#111" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-  'siga-ou-esquerda': '<svg viewBox="0 0 100 100" width="86" height="86"><circle cx="50" cy="50" r="44" fill="#fff" stroke="#c0392b" stroke-width="9"/><path d="M58 74 V30 M58 30 L47 42 M58 30 L69 42" stroke="#111" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M58 60 H32 M32 60 L42 51 M32 60 L42 69" stroke="#111" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-
-  /* ---- regulamentação: círculo azul ---- */
-  'bicicleta-exclusiva': '<svg viewBox="0 0 100 100" width="86" height="86"><circle cx="50" cy="50" r="44" fill="#2a5db0"/><circle cx="32" cy="66" r="8" fill="none" stroke="#fff" stroke-width="4"/><circle cx="68" cy="66" r="8" fill="none" stroke="#fff" stroke-width="4"/><path d="M32 66 L46 50 L60 50 L68 66 M46 50 L43 41 M54 50 L61 42" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-
-  /* ---- advertência: losango amarelo ---- */
-  'curva-perigosa': '<svg viewBox="0 0 100 100" width="86" height="86"><path d="M50 6 L94 50 L50 94 L6 50 Z" fill="#ffcf00" stroke="#111" stroke-width="5" stroke-linejoin="round"/><path d="M34 74 C34 56 48 52 66 52 M66 52 L54 48 M66 52 L62 63" stroke="#111" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-  'travessia-pedestres': '<svg viewBox="0 0 100 100" width="86" height="86"><path d="M50 6 L94 50 L50 94 L6 50 Z" fill="#ffcf00" stroke="#111" stroke-width="5" stroke-linejoin="round"/><circle cx="50" cy="30" r="6" fill="#111"/><path d="M50 38 V52 M50 44 L41 50 M50 44 L59 50 M50 52 L43 64 M50 52 L57 64" stroke="#111" stroke-width="5" fill="none" stroke-linecap="round"/><rect x="30" y="68" width="8" height="14" fill="#fff" stroke="#111" stroke-width="2"/><rect x="46" y="68" width="8" height="14" fill="#fff" stroke="#111" stroke-width="2"/><rect x="62" y="68" width="8" height="14" fill="#fff" stroke="#111" stroke-width="2"/></svg>',
-  'depressao': '<svg viewBox="0 0 100 100" width="86" height="86"><path d="M50 6 L94 50 L50 94 L6 50 Z" fill="#ffcf00" stroke="#111" stroke-width="5" stroke-linejoin="round"/><path d="M22 42 L36 42 Q44 42 46 52 Q48 62 50 62 Q52 62 54 52 Q56 42 64 42 L78 42" stroke="#111" stroke-width="6" fill="none" stroke-linecap="round"/></svg>',
-  'semaforo-frente': '<svg viewBox="0 0 100 100" width="86" height="86"><path d="M50 6 L94 50 L50 94 L6 50 Z" fill="#ffcf00" stroke="#111" stroke-width="5" stroke-linejoin="round"/><rect x="38" y="24" width="24" height="54" rx="8" fill="#111"/><circle cx="50" cy="36" r="6" fill="#c0392b"/><circle cx="50" cy="51" r="6" fill="#f5b301"/><circle cx="50" cy="66" r="6" fill="#1f8a3b"/></svg>',
-  'tratores': '<svg viewBox="0 0 100 100" width="86" height="86"><path d="M50 6 L94 50 L50 94 L6 50 Z" fill="#ffcf00" stroke="#111" stroke-width="5" stroke-linejoin="round"/><circle cx="36" cy="66" r="11" fill="#111"/><circle cx="68" cy="70" r="7" fill="#111"/><rect x="34" y="46" width="24" height="12" rx="2" fill="#111"/><rect x="56" y="38" width="9" height="22" fill="#111"/><path d="M60 38 L66 28" stroke="#111" stroke-width="4" stroke-linecap="round"/></svg>',
-  'trem-sem-cancela': '<svg viewBox="0 0 100 100" width="86" height="86"><path d="M50 6 L94 50 L50 94 L6 50 Z" fill="#ffcf00" stroke="#111" stroke-width="5" stroke-linejoin="round"/><rect x="34" y="28" width="32" height="40" rx="6" fill="#111"/><rect x="39" y="33" width="22" height="12" rx="2" fill="#ffcf00"/><circle cx="42" cy="58" r="4" fill="#ffcf00"/><circle cx="58" cy="58" r="4" fill="#ffcf00"/><path d="M28 80 H72" stroke="#111" stroke-width="5" stroke-linecap="round"/></svg>',
-  'animais': '<svg viewBox="0 0 100 100" width="86" height="86"><path d="M50 6 L94 50 L50 94 L6 50 Z" fill="#ffcf00" stroke="#111" stroke-width="5" stroke-linejoin="round"/><ellipse cx="48" cy="56" rx="17" ry="10" fill="#111"/><path d="M36 63 V76 M44 64 V77 M54 64 V77 M62 63 V76" stroke="#111" stroke-width="5" stroke-linecap="round"/><rect x="60" y="40" width="13" height="12" rx="3" fill="#111"/><path d="M62 40 L58 32 M71 40 L75 32" stroke="#111" stroke-width="4" stroke-linecap="round"/></svg>',
-  'escolares': '<svg viewBox="0 0 100 100" width="86" height="86"><path d="M50 6 L94 50 L50 94 L6 50 Z" fill="#ffcf00" stroke="#111" stroke-width="5" stroke-linejoin="round"/><circle cx="40" cy="34" r="6" fill="#111"/><path d="M40 42 V58 M40 48 L31 54 M40 48 L49 54 M40 58 L33 74 M40 58 L47 74" stroke="#111" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="63" cy="48" r="5" fill="#111"/><path d="M63 55 V67 M63 60 L56 64 M63 60 L70 64 M63 67 L58 78 M63 67 L68 78" stroke="#111" stroke-width="4" fill="none" stroke-linecap="round"/></svg>',
-  'parada-obrigatoria': '<svg viewBox="0 0 100 100" width="86" height="86"><path d="M50 6 L94 50 L50 94 L6 50 Z" fill="#ffcf00" stroke="#111" stroke-width="5" stroke-linejoin="round"/><polygon points="68.5,57.7 57.7,68.5 42.3,68.5 31.5,57.7 31.5,42.3 42.3,31.5 57.7,31.5 68.5,42.3" fill="#c0392b"/><text x="50" y="55" font-size="12" font-weight="800" text-anchor="middle" fill="#fff" font-family="Arial">PARE</text></svg>',
-  'mao-dupla': '<svg viewBox="0 0 100 100" width="86" height="86"><path d="M50 6 L94 50 L50 94 L6 50 Z" fill="#ffcf00" stroke="#111" stroke-width="5" stroke-linejoin="round"/><path d="M40 74 V28 M40 28 L33 37 M40 28 L47 37" stroke="#111" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M60 26 V72 M60 72 L53 63 M60 72 L67 63" stroke="#111" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-
-  /* ---- passagem de nível: cruz de Santo André (X amarelo + plaqueta N LINHA) ---- */
-  'cruz-santo-andre': '<svg viewBox="0 0 100 100" width="86" height="86"><path d="M24 20 L76 64 M76 20 L24 64" stroke="#111" stroke-width="20" stroke-linecap="butt"/><path d="M24 20 L76 64 M76 20 L24 64" stroke="#ffcf00" stroke-width="12" stroke-linecap="butt"/><rect x="34" y="64" width="32" height="28" fill="#ffcf00" stroke="#111" stroke-width="2.5"/><text x="50" y="75" font-size="10" font-weight="800" text-anchor="middle" fill="#111" font-family="Arial">N</text><text x="50" y="87" font-size="7.5" font-weight="800" text-anchor="middle" fill="#111" font-family="Arial">LINHA</text></svg>',
-
-  /* ---- indicação ---- */
-  'retorno': '<svg viewBox="0 0 100 100" width="86" height="86"><rect x="10" y="26" width="80" height="48" rx="8" fill="#1f8a3b"/><path d="M65 60 V44 Q65 34 55 34 H45 Q35 34 35 44 V52 M35 52 L28 45 M35 52 L42 45" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-
-  /* ---- identificação veicular: placa padrão Mercosul ---- */
-  'placa-mercosul': '<svg viewBox="0 0 100 100" width="110" height="86"><rect x="6" y="26" width="88" height="48" rx="6" fill="#fff" stroke="#111" stroke-width="3"/><rect x="9" y="29" width="82" height="13" fill="#2a5db0"/><text x="50" y="39" font-size="9" font-weight="700" text-anchor="middle" fill="#fff" font-family="Arial">BRASIL</text><text x="50" y="64" font-size="17" font-weight="800" text-anchor="middle" fill="#111" font-family="Arial">ABC1D23</text></svg>'
+  seta: 'siga-frente.svg',
+  proibido: 'proibido.svg',
+  advertencia: 'advertencia.svg',
+  estacionamento: 'estacionamento.svg',
+  pare: 'pare.svg',
+  'velocidade-60': 'velocidade-60.svg',
+  'proibido-automotores': 'proibido-automotores.svg',
+  'proibido-motos': 'proibido-motos.svg',
+  'proibido-onibus': 'proibido-onibus.svg',
+  'proibido-caminhoes': 'proibido-caminhoes.svg',
+  'proibido-pedestres': 'proibido-pedestres.svg',
+  'proibido-estacionar': 'proibido-estacionar.svg',
+  'ultrapassar-proibido': 'ultrapassar-proibido.svg',
+  'vire-esquerda': 'vire-esquerda.svg',
+  'siga-frente': 'siga-frente.svg',
+  'siga-ou-esquerda': 'siga-ou-esquerda.svg',
+  'bicicleta-exclusiva': 'bicicleta-exclusiva.svg',
+  'curva-perigosa': 'curva-perigosa.svg',
+  'travessia-pedestres': 'travessia-pedestres.svg',
+  depressao: 'depressao.svg',
+  'semaforo-frente': 'semaforo-frente.svg',
+  tratores: 'tratores.svg',
+  'trem-sem-cancela': 'trem-sem-cancela.svg',
+  animais: 'animais.svg',
+  escolares: 'escolares.svg',
+  'parada-obrigatoria': 'parada-obrigatoria.svg',
+  'mao-dupla': 'mao-dupla.svg',
+  'cruz-santo-andre': 'cruz-santo-andre.svg',
+  retorno: 'retorno.svg',
+  'placa-mercosul': 'placa-mercosul.jpg'
 };

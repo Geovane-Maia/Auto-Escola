@@ -79,10 +79,9 @@
 
 /* ---------- Upload de imagem da questão ---------- */
 .upload-imagem { background: #f6f8fa; border: 1px dashed var(--borda); border-radius: 10px; padding: 14px; }
-.preview-imagem { display: block; max-width: 220px; max-height: 150px; border-radius: 8px; border: 1px solid var(--borda); margin-bottom: 10px; object-fit: contain; background: #fff; }
+.preview-imagem { display: block; width: 180px; height: 140px; object-fit: contain; border-radius: 8px; border: 1px solid var(--borda); margin-bottom: 10px; background: #fff; }
 .preview-imagem[hidden] { display: none; }
-.thumb-pergunta { display: block; max-width: 200px; max-height: 130px; border-radius: 8px; border: 1px solid var(--borda); margin: 10px 0; object-fit: contain; background: #fff; }
-.preview-svg svg { max-width: 160px; height: auto; background: #fff; border: 1px solid var(--borda); border-radius: 8px; padding: 8px; margin-bottom: 10px; }
+.thumb-pergunta { display: block; width: 120px; height: 100px; object-fit: contain; border-radius: 8px; border: 1px solid var(--borda); margin: 10px 0; background: #fff; }
 
 /* ---------- Config ---------- */
 .card-config {
