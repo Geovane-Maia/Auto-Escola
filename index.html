@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auto Escola Quixelô — Simulado ABCDETRAN</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="page-login">
+
+  <div class="login-wrap">
+    <div class="login-card">
+      <div class="login-topo">
+        <img class="logo-img" src="assets/logo.jpeg" alt="Auto Escola Quixelô">
+        <div>
+          <h1>Auto Escola Quixelô</h1>
+          <p>SUA DIREÇÃO CERTA · SIMULADOS</p>
+        </div>
+      </div>
+
+      <div class="login-corpo">
+        <p class="titulo-digitos">Digite seu CPF</p>
+        <div class="cpf-display vazio" id="cpf-display">_-_-_-</div>
+        <small id="erro-cpf" class="erro" hidden></small>
+
+        <div class="teclado" id="teclado">
+          <button class="tecla" data-num="1">1</button>
+          <button class="tecla" data-num="2">2</button>
+          <button class="tecla" data-num="3">3</button>
+          <button class="tecla" data-num="4">4</button>
+          <button class="tecla" data-num="5">5</button>
+          <button class="tecla" data-num="6">6</button>
+          <button class="tecla" data-num="7">7</button>
+          <button class="tecla" data-num="8">8</button>
+          <button class="tecla" data-num="9">9</button>
+          <button class="tecla apagar" id="tecla-apagar" title="Apagar">«</button>
+          <button class="tecla" data-num="0">0</button>
+          <button class="tecla entrar" id="tecla-entrar" title="Entrar">→</button>
+        </div>
+
+        <p class="login-ajuda">Utilize o teclado virtual da tela. Apenas números.</p>
+      </div>
+    </div>
+
+    <footer class="login-footer">
+      <button id="link-admin" class="btn-link">Área do administrador</button>
+    </footer>
+  </div>
+
+  <!-- Modal login admin -->
+  <div class="modal-overlay" id="modal-admin" hidden>
+    <div class="modal">
+      <h2>Acesso do administrador</h2>
+      <form id="form-admin" autocomplete="off">
+        <label for="usuario">Usuário</label>
+        <input type="text" id="usuario" required>
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" required>
+        <small id="erro-admin" class="erro" hidden></small>
+        <div class="modal-acoes">
+          <button type="button" class="btn btn-secundario" id="fechar-modal">Cancelar</button>
+          <button type="submit" class="btn btn-primario">Entrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

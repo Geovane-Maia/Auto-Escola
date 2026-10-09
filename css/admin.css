@@ -1,0 +1,98 @@
+/* =========================================================
+   Quixelô — Admin (tema ABCDETRAN)
+   ========================================================= */
+
+/* ---------- Abas ---------- */
+.abas {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+  border-bottom: 2px solid var(--borda);
+  padding-bottom: 10px;
+}
+.aba {
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: .92rem;
+  font-weight: 700;
+  color: var(--texto-suave);
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.aba:hover { background: #e8f0f8; color: var(--azul); }
+.aba.ativa { background: var(--azul); border-bottom: 3px solid var(--azul-esc); color: #fff; }
+
+/* ---------- Barra de ferramentas ---------- */
+.barra-ferramentas {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.barra-ferramentas h2 { color: var(--azul-titulo); font-size: 1.15rem; }
+.ferramentas { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.input-busca { width: auto; min-width: 220px; padding: 9px 14px; }
+
+/* ---------- Tabelas ---------- */
+.tabela-wrap { overflow-x: auto; border-radius: var(--raio); box-shadow: 0 4px 14px rgba(30,58,95,.08); border: 1px solid var(--borda); }
+.vazio-celula { padding: 24px; text-align: center; color: var(--texto-suave); }
+.celula-acoes { display: flex; gap: 6px; white-space: nowrap; }
+.celula-acoes .btn { flex-shrink: 0; }
+
+/* ---------- Cards de pergunta ---------- */
+.card-pergunta-admin {
+  background: var(--card);
+  border: 1px solid var(--borda);
+  border-left: 5px solid var(--verde);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+  box-shadow: 0 3px 10px rgba(30,58,95,.06);
+}
+.cabec-pergunta { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+.enunciado-admin { font-weight: 600; margin-bottom: 10px; line-height: 1.4; }
+.lista-alternativas { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.lista-alternativas li { font-size: .88rem; color: var(--texto-suave); padding: 4px 8px; border-radius: 6px; }
+.lista-alternativas li.correta { background: #e5f6ea; color: var(--ok); font-weight: 600; }
+
+/* ---------- Modal pergunta (largo) ---------- */
+.modal-largo { max-width: 560px; }
+.linha-alternativa { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.linha-alternativa input[type="radio"] { width: 18px; height: 18px; accent-color: var(--verde); flex-shrink: 0; cursor: pointer; }
+.letra-alt {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--borda); display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: .8rem; flex-shrink: 0;
+}
+.linha-alternativa .input-alternativa { flex: 1; padding: 9px 12px; }
+
+.check-inline { display: flex; align-items: center; gap: 8px; margin-top: 14px; font-weight: 600; }
+.check-inline input { width: 18px; height: 18px; accent-color: var(--verde); }
+
+.texto-suave { color: var(--texto-suave); font-size: .88rem; }
+
+/* ---------- Config ---------- */
+.card-config {
+  background: var(--card);
+  border: 1px solid var(--borda);
+  border-top: 5px solid var(--azul);
+  border-radius: var(--raio);
+  padding: 22px;
+  margin-bottom: 18px;
+  max-width: 520px;
+}
+.card-config h3 { color: var(--azul-titulo); margin-bottom: 6px; font-size: 1rem; }
+.card-config form .btn { margin-top: 16px; }
+.linha-acoes { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+
+@media (max-width: 560px) {
+  .input-busca { min-width: 0; width: 100%; }
+  .barra-ferramentas { flex-direction: column; align-items: stretch; }
+  .ferramentas { flex-direction: column; align-items: stretch; }
+}

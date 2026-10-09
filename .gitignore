@@ -1,0 +1,14 @@
+# privado: logs locais de preview
+.freebuff-preview.log
+
+# sistema / editores
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.log
+
+# dependências (se um dia houver build)
+node_modules/
+dist/

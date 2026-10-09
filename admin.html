@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administração — Quixelô</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <header class="topo">
+    <div class="topo-inner">
+      <a class="marca" href="admin.html">
+        <img class="mini-logo" src="assets/logo.jpeg" alt="Quixelô">
+        <strong>Quixelô · Admin</strong>
+      </a>
+      <div class="topo-acoes">
+        <span class="topo-usuario" id="nome-admin"></span>
+        <a class="btn btn-secundario btn-pequeno" href="painel.html">Ver site</a>
+        <button class="btn btn-secundario btn-pequeno" id="btn-sair">Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <nav class="abas">
+      <button class="aba ativa" data-aba="alunos">👨‍🎓 Alunos</button>
+      <button class="aba" data-aba="perguntas">❓ Perguntas</button>
+      <button class="aba" data-aba="resultados">📊 Resultados</button>
+      <button class="aba" data-aba="config">⚙️ Configurações</button>
+    </nav>
+
+    <!-- ================= ALUNOS ================= -->
+    <section id="aba-alunos" class="conteudo-aba">
+      <div class="barra-ferramentas">
+        <h2>Gerenciar alunos</h2>
+        <div class="ferramentas">
+          <input type="text" id="busca-aluno" placeholder="Buscar por nome ou CPF…" class="input-busca">
+          <button class="btn btn-primario btn-pequeno" id="btn-novo-aluno" style="width:auto;">+ Novo aluno</button>
+        </div>
+      </div>
+      <div class="tabela-wrap"><table class="tabela" id="tabela-alunos"></table></div>
+    </section>
+
+    <!-- ================= PERGUNTAS ================= -->
+    <section id="aba-perguntas" class="conteudo-aba" hidden>
+      <div class="barra-ferramentas">
+        <h2>Gerenciar perguntas</h2>
+        <div class="ferramentas">
+          <select id="filtro-cat" class="input-busca"></select>
+          <button class="btn btn-primario btn-pequeno" id="btn-nova-pergunta" style="width:auto;">+ Nova pergunta</button>
+        </div>
+      </div>
+      <div id="lista-perguntas"></div>
+    </section>
+
+    <!-- ================= RESULTADOS ================= -->
+    <section id="aba-resultados" class="conteudo-aba" hidden>
+      <div class="barra-ferramentas">
+        <h2>Resultados dos simulados</h2>
+        <button class="btn btn-perigo btn-pequeno" id="btn-limpar-resultados" style="width:auto;">Limpar todos</button>
+      </div>
+      <div class="tabela-wrap"><table class="tabela" id="tabela-resultados"></table></div>
+    </section>
+
+    <!-- ================= CONFIGURAÇÕES ================= -->
+    <section id="aba-config" class="conteudo-aba" hidden>
+      <div class="barra-ferramentas"><h2>Configurações</h2></div>
+      <div class="card-config">
+        <h3>Alterar senha do administrador</h3>
+        <form id="form-senha">
+          <label for="nova-senha">Nova senha</label>
+          <input type="password" id="nova-senha" minlength="6" required>
+          <label for="confirma-senha">Confirmar nova senha</label>
+          <input type="password" id="confirma-senha" minlength="6" required>
+          <small id="erro-senha" class="erro" hidden></small>
+          <button type="submit" class="btn btn-primario" style="width:auto;">Salvar nova senha</button>
+        </form>
+      </div>
+      <div class="card-config">
+        <h3>Exportar / Importar dados</h3>
+        <p class="texto-suave">Os dados ficam salvos neste navegador. Exporte um backup antes de limpar o cache.</p>
+        <div class="linha-acoes">
+          <button class="btn btn-secundario btn-pequeno" id="btn-exportar">Exportar JSON</button>
+          <label class="btn btn-secundario btn-pequeno" style="margin:0;cursor:pointer;">
+            Importar JSON <input type="file" id="input-importar" accept="application/json" hidden>
+          </label>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= MODAL ALUNO ================= -->
+  <div class="modal-overlay" id="modal-aluno" hidden>
+    <div class="modal">
+      <h2 id="titulo-modal-aluno">Novo aluno</h2>
+      <form id="form-aluno" autocomplete="off">
+        <label for="aluno-nome">Nome completo</label>
+        <input type="text" id="aluno-nome" required>
+        <label for="aluno-cpf">CPF</label>
+        <input type="text" id="aluno-cpf" inputmode="numeric" placeholder="000.000.000-00" maxlength="14" required>
+        <label for="aluno-turma">Turma <span class="texto-suave">(opcional)</span></label>
+        <input type="text" id="aluno-turma" placeholder="Ex.: Turma 2026-A">
+        <label class="check-inline"><input type="checkbox" id="aluno-ativo" checked> Aluno ativo</label>
+        <small id="erro-aluno" class="erro" hidden></small>
+        <div class="modal-acoes">
+          <button type="button" class="btn btn-secundario" data-fechar>Cancelar</button>
+          <button type="submit" class="btn btn-primario">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL PERGUNTA ================= -->
+  <div class="modal-overlay" id="modal-pergunta" hidden>
+    <div class="modal modal-largo">
+      <h2 id="titulo-modal-pergunta">Nova pergunta</h2>
+      <form id="form-pergunta" autocomplete="off">
+        <label for="perg-categoria">Categoria</label>
+        <input type="text" id="perg-categoria" list="lista-categorias" placeholder="Ex.: Legislação" required>
+        <datalist id="lista-categorias"></datalist>
+
+        <label for="perg-enunciado">Enunciado</label>
+        <textarea id="perg-enunciado" rows="3" required></textarea>
+
+        <label>Alternativas (marque a correta)</label>
+        <div id="campos-alternativas"></div>
+
+        <div class="modal-acoes">
+          <button type="button" class="btn btn-secundario" data-fechar>Cancelar</button>
+          <button type="submit" class="btn btn-primario">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

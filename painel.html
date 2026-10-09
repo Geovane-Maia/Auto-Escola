@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu caderno — Quixelô</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="topo">
+    <div class="topo-inner">
+      <a class="marca" href="painel.html">
+        <img class="mini-logo" src="assets/logo.jpeg" alt="Quixelô">
+        <strong>Quixelô · ABCDETRAN</strong>
+      </a>
+      <div class="topo-acoes">
+        <span class="topo-usuario" id="nome-aluno"></span>
+        <button class="btn btn-perigo btn-pequeno" id="btn-sair">Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- boas-vindas estilo ABCDETRAN -->
+    <div class="box-boas-vindas">
+      <div>
+        <h1>Bem-vindo, <strong id="boas-vindas-nome"></strong></h1>
+        <ul>
+          <li>Sua Turma é: <strong id="boas-vindas-turma"></strong></li>
+          <li>Seu último acesso foi: <strong id="boas-vindas-acesso"></strong></li>
+          <li>Seu IP do último acesso foi: <strong id="boas-vindas-ip">—</strong></li>
+        </ul>
+        <p class="texto-suave" style="margin-top:8px;">Verifique se o seu nome está correto no topo da tela.</p>
+      </div>
+    </div>
+
+    <section class="secao">
+      <h2 class="secao-titulo">Cadernos disponíveis</h2>
+      <div class="grade-cadernos" id="lista-cadernos"></div>
+    </section>
+
+    <section class="secao">
+      <h2 class="secao-titulo">Meu histórico</h2>
+      <div id="historico"></div>
+    </section>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/painel.js"></script>
+</body>
+</html>
