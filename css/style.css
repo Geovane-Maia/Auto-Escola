@@ -386,6 +386,7 @@ label { display: block; font-size: .9rem; font-weight: 600; margin: 14px 0 6px; 
   display: flex; align-items: center; justify-content: center;
   box-shadow: 0 3px 10px rgba(0,0,0,.08);
 }
+.img-questao img { max-width: 200px; max-height: 150px; border-radius: 6px; object-fit: contain; }
 .cartao-questao .enunciado {
   font-size: 1.1rem; font-weight: 600; color: #1f3d24;
   line-height: 1.5; flex: 1;

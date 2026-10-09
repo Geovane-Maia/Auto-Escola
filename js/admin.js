@@ -140,6 +140,54 @@
   const modalPergunta = document.getElementById('modal-pergunta');
   const formPergunta = document.getElementById('form-pergunta');
   let editandoPerguntaId = null;
+  let imagemPergunta = '';
+  const PLACAS_PRESET = ['seta', 'proibido', 'triangulo', 'estacionamento'];
+
+  function atualizaPreviewImagem() {
+    const img = document.getElementById('preview-perg-imagem');
+    const btnRem = document.getElementById('btn-remover-imagem');
+    if (!img || !btnRem) return;
+    if (imagemPergunta && (imagemPergunta.startsWith('data:') || imagemPergunta.startsWith('http') || imagemPergunta.startsWith('blob:'))) {
+      img.src = imagemPergunta;
+      img.hidden = false;
+      btnRem.hidden = false;
+    } else if (imagemPergunta && PLACAS_PRESET.includes(imagemPergunta)) {
+      img.removeAttribute('src');
+      img.hidden = true;
+      btnRem.hidden = false;
+    } else {
+      img.removeAttribute('src');
+      img.hidden = true;
+      btnRem.hidden = true;
+    }
+    const preset = document.getElementById('perg-placa-preset');
+    if (preset) preset.value = PLACAS_PRESET.includes(imagemPergunta) ? imagemPergunta : '';
+  }
+
+  function processaArquivoImagem(arquivo) {
+    if (!arquivo) return;
+    if (!arquivo.type.startsWith('image/')) { alert('Selecione um arquivo de imagem (PNG/JPG).'); return; }
+    if (arquivo.size > 2 * 1024 * 1024) { alert('Imagem muito grande. Use uma imagem de até 2MB.'); return; }
+    const leitor = new FileReader();
+    leitor.onload = () => {
+      const original = new Image();
+      original.onload = () => {
+        // Reduz para no máximo 600px para não estourar localStorage/Supabase
+        const MAX = 600;
+        let w = original.width, h = original.height;
+        const escala = Math.min(1, MAX / Math.max(w, h));
+        w = Math.round(w * escala); h = Math.round(h * escala);
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(original, 0, 0, w, h);
+        imagemPergunta = canvas.toDataURL('image/jpeg', 0.82);
+        atualizaPreviewImagem();
+      };
+      original.onerror = () => alert('Não foi possível ler a imagem.');
+      original.src = leitor.result;
+    };
+    leitor.readAsDataURL(arquivo);
+  }
 
   function montarAlternativas(quantidade = 4) {
     const box = document.getElementById('campos-alternativas');
@@ -189,6 +237,7 @@
           </div>
         </div>
         <p class="enunciado-admin">${esc(p.enunciado)}</p>
+        ${p.imagem ? (p.imagem.startsWith('data:') || p.imagem.startsWith('http') ? `<img src="${p.imagem}" alt="Placa" class="thumb-pergunta">` : `<span class="categoria-tag">🪧 Placa padrão: ${esc(p.imagem)}</span>`) : ''}
         <ul class="lista-alternativas">
           ${p.alternativas.map((alt, i) => `
             <li class="${i === p.correta ? 'correta' : ''}">${LETRAS[i]}) ${esc(alt)} ${i === p.correta ? '✔' : ''}</li>
@@ -208,6 +257,7 @@
 
   async function abrirPergunta(id = null) {
     editandoPerguntaId = id;
+    imagemPergunta = '';
     document.getElementById('titulo-modal-pergunta').textContent = id ? 'Editar pergunta' : 'Nova pergunta';
     await renderFiltroCategorias();
 
@@ -216,6 +266,7 @@
       const p = todos.find(x => x.id === id);
       document.getElementById('perg-categoria').value = p.categoria;
       document.getElementById('perg-enunciado').value = p.enunciado;
+      imagemPergunta = p.imagem || '';
       montarAlternativas(p.alternativas.length);
       document.querySelectorAll('.input-alternativa').forEach((inp, i) => inp.value = p.alternativas[i]);
       document.querySelector(`input[name="correta"][value="${p.correta}"]`).checked = true;
@@ -223,11 +274,28 @@
       formPergunta.reset();
       montarAlternativas(4);
     }
+    const inputFile = document.getElementById('perg-imagem');
+    if (inputFile) inputFile.value = '';
+    atualizaPreviewImagem();
     modalPergunta.hidden = false;
   }
 
   document.getElementById('btn-nova-pergunta').addEventListener('click', () => abrirPergunta());
   document.getElementById('filtro-cat').addEventListener('change', renderPerguntas);
+  document.getElementById('perg-imagem').addEventListener('change', (e) => {
+    processaArquivoImagem(e.target.files[0]);
+    e.target.value = '';
+  });
+  document.getElementById('btn-remover-imagem').addEventListener('click', () => {
+    imagemPergunta = '';
+    const inputFile = document.getElementById('perg-imagem');
+    if (inputFile) inputFile.value = '';
+    atualizaPreviewImagem();
+  });
+  document.getElementById('perg-placa-preset').addEventListener('change', (e) => {
+    imagemPergunta = e.target.value || '';
+    atualizaPreviewImagem();
+  });
 
   formPergunta.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -235,6 +303,7 @@
     const enunciado = document.getElementById('perg-enunciado').value.trim();
     const alternativas = [...document.querySelectorAll('.input-alternativa')].map(i => i.value.trim());
     const correta = parseInt(document.querySelector('input[name="correta"]:checked').value, 10);
+    const imagem = imagemPergunta || null;
 
     if (alternativas.some(a => !a)) {
       alert('Preencha todas as alternativas.');
@@ -242,9 +311,9 @@
     }
 
     if (editandoPerguntaId) {
-      await DB.perguntas.update(editandoPerguntaId, { categoria, enunciado, alternativas, correta });
+      await DB.perguntas.update(editandoPerguntaId, { categoria, enunciado, alternativas, correta, imagem });
     } else {
-      await DB.perguntas.create({ categoria, enunciado, alternativas, correta });
+      await DB.perguntas.create({ categoria, enunciado, alternativas, correta, imagem });
     }
 
     modalPergunta.hidden = true;

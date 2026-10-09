@@ -31,6 +31,21 @@
     estacionamento: '<svg viewBox="0 0 100 100" width="86" height="86"><rect x="8" y="8" width="84" height="84" rx="12" fill="#2a5db0"/><text x="50" y="72" font-size="58" font-weight="800" text-anchor="middle" fill="#fff" font-family="Arial">P</text></svg>'
   };
 
+  /* escapa HTML do enunciado/alt vindos do banco */
+  function escHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  /* imagem da questão: placa padrão (SVG) ou foto enviada pelo admin */
+  function imagemQuestaoHTML(p) {
+    if (!p.imagem) return '';
+    if (PLACAS[p.imagem]) return `<div class="img-questao">${PLACAS[p.imagem]}</div>`;
+    if (/^(data:image|https?:|blob:)/.test(p.imagem)) {
+      return `<div class="img-questao"><img src="${p.imagem}" alt="Placa de trânsito" loading="lazy"></div>`;
+    }
+    return '';
+  }
+
   /* estado por questão */
   const estado = perguntas.map(() => ({ selecionada: null, confirmada: false }));
   let atual = 0;
@@ -86,15 +101,15 @@
       <div id="aviso-pend"></div>
 
       <div class="cartao-questao">
-        ${p.imagem && PLACAS[p.imagem] ? `<div class="img-questao">${PLACAS[p.imagem]}</div>` : ''}
-        <p class="enunciado">${p.enunciado}</p>
+        ${imagemQuestaoHTML(p)}
+        <p class="enunciado">${escHtml(p.enunciado)}</p>
       </div>
 
       <div class="grade-respostas">
         ${p.alternativas.map((alt, i) => `
           <button class="cartao-resp ${est.selecionada === i ? 'selecionada' : ''}" data-i="${i}">
             <span class="letra">${LETRAS[i]}</span>
-            <span class="texto-resp">${alt}</span>
+            <span class="texto-resp">${escHtml(alt)}</span>
             <span class="radio"></span>
           </button>
         `).join('')}

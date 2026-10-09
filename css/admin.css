@@ -77,6 +77,12 @@
 
 .texto-suave { color: var(--texto-suave); font-size: .88rem; }
 
+/* ---------- Upload de imagem da questão ---------- */
+.upload-imagem { background: #f6f8fa; border: 1px dashed var(--borda); border-radius: 10px; padding: 14px; }
+.preview-imagem { display: block; max-width: 220px; max-height: 150px; border-radius: 8px; border: 1px solid var(--borda); margin-bottom: 10px; object-fit: contain; background: #fff; }
+.preview-imagem[hidden] { display: none; }
+.thumb-pergunta { display: block; max-width: 200px; max-height: 130px; border-radius: 8px; border: 1px solid var(--borda); margin: 10px 0; object-fit: contain; background: #fff; }
+
 /* ---------- Config ---------- */
 .card-config {
   background: var(--card);

@@ -109,8 +109,13 @@ Acesso: link "Área do administrador" no rodapé do login.
 
 - **Alunos:** criar, editar (nome, CPF, turma, ativo), excluir, buscar.
 - **Perguntas:** criar, editar, excluir; categorias: Legislação, Sinalização, Direção Defensiva, Primeiros Socorros, Mecânica Básica.
+- **Imagem da placa:** no modal da pergunta, botão `📷 Subir imagem` (PNG/JPG até 2MB, reduzida auto a 600px) ou placa padrão (seta, proibido, triângulo, P). A imagem aparece na Zona de Contexto da prova.
 - **Resultados:** ver todos, excluir individual ou limpar tudo.
 - **Configurações:** trocar senha do admin; exportar backup JSON (importação apenas no modo local).
+
+## 📕 Manual do aluno (PDF)
+
+O arquivo `Guia-do-Aluno-ABCDETRAN.pdf` traz toda a orientação de uso da plataforma de questionário (sem a parte de administrador): 5 etapas, 3 botões, teclado de CPF, 3 zonas da prova, regra de ouro, pendências, conclusão e check-list.
 
 ## ⬆️ Como subir para o GitHub
 

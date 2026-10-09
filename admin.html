@@ -124,6 +124,26 @@
         <label for="perg-enunciado">Enunciado</label>
         <textarea id="perg-enunciado" rows="3" required></textarea>
 
+        <label>Imagem da placa <span class="texto-suave">(opcional — para Sinalização)</span></label>
+        <div class="upload-imagem">
+          <img id="preview-perg-imagem" class="preview-imagem" hidden alt="Prévia da placa">
+          <div class="linha-acoes" style="margin-top:0">
+            <label class="btn btn-secundario btn-pequeno" style="margin:0;cursor:pointer;">
+              📷 Subir imagem <input type="file" id="perg-imagem" accept="image/*" hidden>
+            </label>
+            <button type="button" class="btn btn-secundario btn-pequeno" id="btn-remover-imagem" hidden>Remover</button>
+          </div>
+          <small class="texto-suave">PNG/JPG até ~1MB. A imagem é reduzida automaticamente e salva junto à questão.</small>
+          <label for="perg-placa-preset" style="margin-top:10px;">Ou use uma placa padrão</label>
+          <select id="perg-placa-preset" class="input-busca" style="width:100%;min-width:0;">
+            <option value="">Nenhuma</option>
+            <option value="seta">Seta — sentido obrigatório seguir em frente</option>
+            <option value="proibido">Sentido proibido</option>
+            <option value="triangulo">Advertência (triângulo)</option>
+            <option value="estacionamento">Estacionamento (P)</option>
+          </select>
+        </div>
+
         <label>Alternativas (marque a correta)</label>
         <div id="campos-alternativas"></div>
 
