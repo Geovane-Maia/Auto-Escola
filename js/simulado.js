@@ -44,8 +44,8 @@
   /* estado por questão */
   const estado = perguntas.map(() => ({ selecionada: null, confirmada: false }));
   let atual = 0;
-  // Guia ABCDETRAN: 1 minuto por questão (30 questões = 30 minutos)
-  let tempoRestante = N * 60;
+  // Prova com duração de 2 horas (padrão DETRAN)
+  let tempoRestante = 2 * 60 * 60;
   let timerId = null;
   let provaEncerrada = false;
 

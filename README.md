@@ -68,7 +68,7 @@ Para testes, use o acesso padrão já semeado automaticamente:
 - [x] **Passo 4 — Pendências:** `Aviso: Ainda existem questões a serem resolvidas.` + salto até a pendência (Retorne → Marque → Grave laranja → Siga azul).
 - [x] **Passo 5 — Chegada:** `Disciplina concluída! »` somente após responder e confirmar todas as 30.
 - [x] **Checklist:** teclado só números, meta 30 questões, confirmação visual pontilhada, regra laranja, conclusão automática.
-- [x] **Tempo:** 1 minuto por questão (`N * 60s`; 30 questões = 30 min).
+- [x] **Tempo:** 2 horas de prova.
 
 ## 🗄️ Banco de dados (Supabase)
 
@@ -100,7 +100,7 @@ window.SUPABASE = {
 
 ## 📊 Como funciona a prova
 
-- **Tempo:** 1 minuto por questão.
+- **Tempo:** 2 horas.
 - **Ciclo:** 1) **Selecionar** a alternativa (borda preta pontilhada) → 2) **CONFIRMAR RESPOSTA** (botão laranja `✓`) → 3) **AVANÇAR** (botão azul `›`).
 - **Pendências:** o sistema não deixa finalizar com questões em branco (aviso vermelho + salto até a pendência).
 - **Conclusão:** tela `Disciplina concluída! »` com nota (aprovado ≥ 70%) e gabarito.

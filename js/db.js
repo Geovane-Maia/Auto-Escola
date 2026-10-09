@@ -49,9 +49,16 @@ const DB = (() => {
     return [...PERGUNTAS_SEED, ...novas];
   }
 
+  /* Enunciados descartados (fora do padrão DETRAN) — removidos de quem já os tem */
+  const ENUNCIADOS_REMOVIDOS = new Set(
+    ['O sinal triangular com borda vermelha é de:'].map(normEnun)
+  );
+
   /* Completa a lista com as questões do seed que ainda faltam (sem duplicar) */
   function mesclarSeed(lista) {
-    const out = (lista || []).map(p => (p && !p.id) ? { ...p, id: uid() } : p);
+    const out = (lista || [])
+      .map(p => (p && !p.id) ? { ...p, id: uid() } : p)
+      .filter(p => !ENUNCIADOS_REMOVIDOS.has(normEnun(p.enunciado)));
     const vistos = new Set(out.map(p => normEnun(p.enunciado)));
     for (const p of todasSeed()) {
       if (!vistos.has(normEnun(p.enunciado))) {
@@ -91,6 +98,12 @@ const DB = (() => {
       await api('POST', 'alunos', [{ id: uid(), nome: 'Administrador', cpf: CPF_TESTE, turma: 'Administrador', ativo: true }]);
     }
     const pergs = await api('GET', 'perguntas?select=id,enunciado');
+    // remove questões descartadas (fora do padrão DETRAN)
+    for (const p of pergs) {
+      if (ENUNCIADOS_REMOVIDOS.has(normEnun(p.enunciado))) {
+        await api('DELETE', 'perguntas?id=eq.' + encodeURIComponent(p.id));
+      }
+    }
     if (!pergs.length) {
       // banco vazio: insere tudo em lotes de 20
       const todas = todasSeed();
@@ -244,7 +257,7 @@ const PERGUNTAS_SEED = [
   /* Sinalização (6) */
   { categoria: 'Sinalização', enunciado: 'Em uma via urbana, a placa de regulamentação indica...', imagem: 'seta', alternativas: ['Sentido obrigatório seguir em frente.', 'Proibido seguir em frente.', 'Sentido permitido à esquerda.', 'Trânsito em ambos os sentidos.'], correta: 0 },
   { categoria: 'Sinalização', enunciado: 'O sinal circular vermelho com uma faixa horizontal branca significa:', imagem: 'proibido', alternativas: ['Parada obrigatória', 'Ceda passagem', 'Sentido proibido', 'Velocidade máxima'], correta: 2 },
-  { categoria: 'Sinalização', enunciado: 'O sinal triangular com borda vermelha é de:', imagem: 'triangulo', alternativas: ['Advertência', 'Obrigação', 'Indicação', 'Serviços'], correta: 0 },
+  { categoria: 'Sinalização', enunciado: 'O sinal em losango amarelo é de:', imagem: 'advertencia', alternativas: ['Advertência', 'Obrigação', 'Indicação', 'Serviços'], correta: 0 },
   { categoria: 'Sinalização', enunciado: 'A placa azul quadrada com a letra "P" indica:', imagem: 'estacionamento', alternativas: ['Proibido estacionar', 'Estacionamento permitido', 'Parada obrigatória', 'Ponto de ônibus'], correta: 1 },
   { categoria: 'Sinalização', enunciado: 'O piso com faixas diagonais brancas (zebrado) junto à borda da via indica:', alternativas: ['Área de lazer', 'Faixa de retenção — não estacionar nem parar', 'Faixa de pedestres', 'Entrada de garagem'], correta: 1 },
   { categoria: 'Sinalização', enunciado: 'A placa vermelha redonda com um caminhão preto e uma faixa vermelha significa:', imagem: 'proibido-caminhoes', alternativas: ['Proibido o trânsito de caminhões', 'Área de carga', 'Estacionamento para caminhões', 'Via de caminhões preferencial'], correta: 0 },

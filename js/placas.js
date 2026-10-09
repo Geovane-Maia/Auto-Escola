@@ -8,7 +8,7 @@ const PLACAS = {
   /* ---- presets originais ---- */
   seta: '<svg viewBox="0 0 100 100" width="86" height="86"><circle cx="50" cy="50" r="44" fill="#fff" stroke="#c0392b" stroke-width="9"/><path d="M50 24v38M50 24l-13 15M50 24l13 15" stroke="#111" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   proibido: '<svg viewBox="0 0 100 100" width="86" height="86"><circle cx="50" cy="50" r="44" fill="#c0392b"/><rect x="14" y="43" width="72" height="14" rx="3" fill="#fff"/></svg>',
-  triangulo: '<svg viewBox="0 0 100 100" width="86" height="86"><path d="M50 12 L92 88 H8 Z" fill="#fff" stroke="#c0392b" stroke-width="9" stroke-linejoin="round"/><rect x="45.5" y="38" width="9" height="26" rx="4.5" fill="#111"/><circle cx="50" cy="76" r="5.5" fill="#111"/></svg>',
+  advertencia: '<svg viewBox="0 0 100 100" width="86" height="86"><path d="M50 6 L94 50 L50 94 L6 50 Z" fill="#ffcf00" stroke="#111" stroke-width="5" stroke-linejoin="round"/><text x="50" y="70" font-size="48" font-weight="800" text-anchor="middle" fill="#111" font-family="Arial">!</text></svg>',
   estacionamento: '<svg viewBox="0 0 100 100" width="86" height="86"><rect x="8" y="8" width="84" height="84" rx="12" fill="#2a5db0"/><text x="50" y="72" font-size="58" font-weight="800" text-anchor="middle" fill="#fff" font-family="Arial">P</text></svg>',
 
   /* ---- regulamentação: círculo branco, borda vermelha ---- */
@@ -40,8 +40,8 @@ const PLACAS = {
   'parada-obrigatoria': '<svg viewBox="0 0 100 100" width="86" height="86"><path d="M50 6 L94 50 L50 94 L6 50 Z" fill="#ffcf00" stroke="#111" stroke-width="5" stroke-linejoin="round"/><polygon points="68.5,57.7 57.7,68.5 42.3,68.5 31.5,57.7 31.5,42.3 42.3,31.5 57.7,31.5 68.5,42.3" fill="#c0392b"/><text x="50" y="55" font-size="12" font-weight="800" text-anchor="middle" fill="#fff" font-family="Arial">PARE</text></svg>',
   'mao-dupla': '<svg viewBox="0 0 100 100" width="86" height="86"><path d="M50 6 L94 50 L50 94 L6 50 Z" fill="#ffcf00" stroke="#111" stroke-width="5" stroke-linejoin="round"/><path d="M40 74 V28 M40 28 L33 37 M40 28 L47 37" stroke="#111" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M60 26 V72 M60 72 L53 63 M60 72 L67 63" stroke="#111" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
 
-  /* ---- passagem de nível: cruz de Santo André ---- */
-  'cruz-santo-andre': '<svg viewBox="0 0 100 100" width="86" height="86"><path d="M28 22 L72 78 M72 22 L28 78" stroke="#111" stroke-width="24" stroke-linecap="round"/><path d="M28 22 L72 78 M72 22 L28 78" stroke="#fff" stroke-width="15" stroke-linecap="round"/></svg>',
+  /* ---- passagem de nível: cruz de Santo André (X amarelo + plaqueta N LINHA) ---- */
+  'cruz-santo-andre': '<svg viewBox="0 0 100 100" width="86" height="86"><path d="M24 20 L76 64 M76 20 L24 64" stroke="#111" stroke-width="20" stroke-linecap="butt"/><path d="M24 20 L76 64 M76 20 L24 64" stroke="#ffcf00" stroke-width="12" stroke-linecap="butt"/><rect x="34" y="64" width="32" height="28" fill="#ffcf00" stroke="#111" stroke-width="2.5"/><text x="50" y="75" font-size="10" font-weight="800" text-anchor="middle" fill="#111" font-family="Arial">N</text><text x="50" y="87" font-size="7.5" font-weight="800" text-anchor="middle" fill="#111" font-family="Arial">LINHA</text></svg>',
 
   /* ---- indicação ---- */
   'retorno': '<svg viewBox="0 0 100 100" width="86" height="86"><rect x="10" y="26" width="80" height="48" rx="8" fill="#1f8a3b"/><path d="M65 60 V44 Q65 34 55 34 H45 Q35 34 35 44 V52 M35 52 L28 45 M35 52 L42 45" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
