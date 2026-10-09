@@ -50,7 +50,7 @@
     <h3>Caderno Nº 01</h3>
     <span class="tipo">Tipo: SIMULADO</span>
     <br>
-    <span class="qtd">${total} questões</span>
+    <span class="qtd">${total} questões no banco</span>
     <span class="btn-comecar">▶ ACESSAR O CADERNO</span>
   `;
   grade.appendChild(card);

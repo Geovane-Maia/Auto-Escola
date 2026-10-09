@@ -16,7 +16,8 @@ auto_escola/
 │   └── admin.css         → Estilos extras do painel admin
 ├── js/
 │   ├── config.js         → Credenciais do Supabase (preencher para usar o banco)
-│   ├── db.js             → Camada de dados (Supabase REST ou localStorage) + seed
+│   ├── banco-questoes.js → 135 questões do Banco Nacional (DETRAN/CE · Centec)
+│   ├── db.js             → Camada de dados (Supabase REST ou localStorage) + seed sem duplicar
 │   ├── auth.js           → Validação de CPF + sessão
 │   ├── main.js           → Login com teclado virtual
 │   ├── painel.js         → Cadernos e histórico (nome, turma, último acesso, IP)
@@ -144,4 +145,5 @@ git push -u origin main
 
 - Sem Supabase configurado, os dados ficam no `localStorage` (valem por dispositivo/navegador).
 - Com Supabase, as tabelas usam a chave anon com acesso público (adequado para projeto escolar; para produção maior, restrinja com autenticação).
-- O banco já vem com **30 perguntas iniciais** — adicione mais pelo painel admin.
+- O banco já vem com **165 perguntas**: 30 originais + 135 do Banco Nacional de Questões (DETRAN/CE · Centec). A prova sorteia **30 por vez**, como na prova real.
+- O seed completa automaticamente quem já tinha as 30 antigas, sem duplicar (comparação por enunciado).

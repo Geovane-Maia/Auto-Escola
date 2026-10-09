@@ -37,6 +37,31 @@ const DB = (() => {
     return r.status === 204 ? [] : r.json();
   }
 
+  /* Normaliza enunciado para detectar repetidas (acentos/caixa/pontuação) */
+  function normEnun(s) {
+    return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
+  }
+
+  /* Banco completo: 30 originais + Banco Nacional (db.js + banco-questoes.js) */
+  function todasSeed() {
+    const novas = (typeof PERGUNTAS_NOVAS !== 'undefined' && Array.isArray(PERGUNTAS_NOVAS)) ? PERGUNTAS_NOVAS : [];
+    return [...PERGUNTAS_SEED, ...novas];
+  }
+
+  /* Completa a lista com as questões do seed que ainda faltam (sem duplicar) */
+  function mesclarSeed(lista) {
+    const out = (lista || []).map(p => (p && !p.id) ? { ...p, id: uid() } : p);
+    const vistos = new Set(out.map(p => normEnun(p.enunciado)));
+    for (const p of todasSeed()) {
+      if (!vistos.has(normEnun(p.enunciado))) {
+        vistos.add(normEnun(p.enunciado));
+        out.push({ id: uid(), ...p });
+      }
+    }
+    return out;
+  }
+
   /* ---------- seed ---------- */
   async function seed() {
     const CPF_TESTE = '11111111111';
@@ -44,7 +69,9 @@ const DB = (() => {
       if (!localStorage.getItem(K.admins)) {
         gravarLocal(K.admins, [{ id: uid(), usuario: 'admin', senha: 'admin123', nome: 'Administrador', criadoEm: new Date().toISOString() }]);
       }
-      if (!localStorage.getItem(K.perguntas)) gravarLocal(K.perguntas, PERGUNTAS_SEED);
+      // perguntas: cria ou completa sem duplicar (migra quem já tinha as 30 antigas)
+      const atuais = lerLocal(K.perguntas, null);
+      gravarLocal(K.perguntas, mesclarSeed(atuais || []));
       // CPF padrão de teste com perfil Administrador
       const alunosLocal = lerLocal(K.alunos, []);
       if (!alunosLocal.some(a => a.cpf === CPF_TESTE)) {
@@ -63,11 +90,19 @@ const DB = (() => {
     if (!alunoTeste.length) {
       await api('POST', 'alunos', [{ id: uid(), nome: 'Administrador', cpf: CPF_TESTE, turma: 'Administrador', ativo: true }]);
     }
-    const pergs = await api('GET', 'perguntas?select=id&limit=1');
+    const pergs = await api('GET', 'perguntas?select=id,enunciado');
     if (!pergs.length) {
-      // insere em lotes de 20
-      for (let i = 0; i < PERGUNTAS_SEED.length; i += 20) {
-        await api('POST', 'perguntas', PERGUNTAS_SEED.slice(i, i + 20).map(p => ({ id: uid(), ...p })));
+      // banco vazio: insere tudo em lotes de 20
+      const todas = todasSeed();
+      for (let i = 0; i < todas.length; i += 20) {
+        await api('POST', 'perguntas', todas.slice(i, i + 20).map(p => ({ id: uid(), ...p })));
+      }
+    } else {
+      // completa com as questões do seed que ainda faltam (sem duplicar)
+      const vistos = new Set(pergs.map(p => normEnun(p.enunciado)));
+      const faltam = todasSeed().filter(p => !vistos.has(normEnun(p.enunciado)));
+      for (let i = 0; i < faltam.length; i += 20) {
+        await api('POST', 'perguntas', faltam.slice(i, i + 20).map(p => ({ id: uid(), ...p })));
       }
     }
   }

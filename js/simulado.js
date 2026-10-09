@@ -17,7 +17,8 @@
     return;
   }
 
-  perguntas = perguntas.sort(() => Math.random() - 0.5);
+  // Guia ABCDETRAN: a prova tem 30 questões — sorteia 30 do banco
+  perguntas = perguntas.sort(() => Math.random() - 0.5).slice(0, 30);
 
   const N = perguntas.length;
   const LETRAS = ['A', 'B', 'C', 'D', 'E'];
