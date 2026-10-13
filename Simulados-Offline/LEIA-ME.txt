@@ -1,0 +1,6 @@
+SIMULADOS ABCDETRAN — VERSÃO OFFLINE
+====================================
+1. Dê duplo clique em index.html (não precisa de internet).
+2. CPF de teste: 11111111111 (11 dígitos) + seta verde.
+3. Os dados ficam salvos neste navegador (localStorage).
+Para gerar de novo após mudar o projeto: python build_offline.py

@@ -133,6 +133,18 @@ O arquivo `Apresentacao-Interativa-ABCDETRAN.pptx` (16 slides) ensina a usar o s
 
 As imagens de sinalização em `assets/placas/` misturam diagramas oficiais do CTB (R-1, R-6a, R-7, R-9, R-10, R-25a, R-25c, R-26, R-29, R-37, R-38, A-2a, A-14, A-15, A-19, A-25, A-31, A-35, A-39, A-32b, A-33b + foto de placa Mercosul, via Wikimedia Commons) com ilustrativas em SVG próprio no traço oficial para as demais (o Wikimedia bloqueou novos downloads deste IP; R-3 e R-34 do Commons divergiam das legendas e foram refeitos).
 
+## 💻 Versão offline (sem internet, sem instalar)
+
+A pasta `Simulados-Offline/` contém as 4 páginas **autocontidas** (CSS, JS e as 30 placas embutidos): basta dar **duplo clique em `index.html`**, mesmo sem internet. Os dados ficam no navegador (modo local).
+
+Para regenerar após qualquer mudança no projeto:
+
+```bash
+python build_offline.py
+```
+
+> Um `.exe` tradicional seria ~200 MB (embute um navegador inteiro) e complicaria cada atualização. A versão offline faz o mesmo — abrir com duplo clique, sem internet — com ~230 KB por página, usando o navegador que já existe no PC.
+
 ## ⬆️ Como subir para o GitHub
 
 ```bash

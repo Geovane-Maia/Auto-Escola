@@ -155,7 +155,7 @@
       img.hidden = false;
       btnRem.hidden = false;
     } else if (imagemPergunta && ehPreset(imagemPergunta)) {
-      img.src = 'assets/placas/' + PLACAS[imagemPergunta];
+      img.src = srcPlaca(imagemPergunta);
       img.hidden = false;
       btnRem.hidden = false;
     } else {
@@ -240,7 +240,7 @@
           </div>
         </div>
         <p class="enunciado-admin">${esc(p.enunciado)}</p>
-        ${p.imagem ? (/^(data:image|https?:|blob:)/.test(p.imagem) ? `<img src="${p.imagem}" alt="Placa" class="thumb-pergunta">` : (typeof PLACAS !== 'undefined' && PLACAS[p.imagem] ? `<img src="assets/placas/${PLACAS[p.imagem]}" alt="Placa" class="thumb-pergunta">` : `<span class="categoria-tag">🪧 Placa: ${esc(p.imagem)}</span>`)) : ''}
+        ${p.imagem ? (/^(data:image|https?:|blob:)/.test(p.imagem) ? `<img src="${p.imagem}" alt="Placa" class="thumb-pergunta">` : (typeof PLACAS !== 'undefined' && PLACAS[p.imagem] ? `<img src="${srcPlaca(p.imagem)}" alt="Placa" class="thumb-pergunta">` : `<span class="categoria-tag">🪧 Placa: ${esc(p.imagem)}</span>`)) : ''}
         <ul class="lista-alternativas">
           ${p.alternativas.map((alt, i) => `
             <li class="${i === p.correta ? 'correta' : ''}">${LETRAS[i]}) ${esc(alt)} ${i === p.correta ? '✔' : ''}</li>

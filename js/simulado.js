@@ -38,7 +38,7 @@
       return `<div class="img-questao"><img src="${p.imagem}" alt="Placa de trânsito" loading="lazy"></div>`;
     }
     if (typeof PLACAS !== 'undefined' && PLACAS[p.imagem]) {
-      return `<div class="img-questao"><img src="assets/placas/${PLACAS[p.imagem]}" alt="Placa de trânsito" loading="lazy"></div>`;
+      return `<div class="img-questao"><img src="${srcPlaca(p.imagem)}" alt="Placa de trânsito" loading="lazy"></div>`;
     }
     return '';
   }

@@ -41,3 +41,11 @@ const PLACAS = {
   retorno: 'retorno.svg',
   'placa-mercosul': 'placa-mercosul.jpg'
 };
+
+/* Caminho da imagem de uma placa. Na versão offline (build_offline.py),
+   PLACAS_B64 contém as imagens em base64 e tem prioridade. */
+function srcPlaca(chave) {
+  if (typeof PLACAS_B64 !== 'undefined' && PLACAS_B64 && PLACAS_B64[chave]) return PLACAS_B64[chave];
+  if (typeof PLACAS !== 'undefined' && PLACAS[chave]) return 'assets/placas/' + PLACAS[chave];
+  return '';
+}
