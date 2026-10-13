@@ -1,5 +1,5 @@
 /* =========================================================
-   Quixelô — simulado.html (novo layout)
+   ABCDETRAN — simulado.html (novo layout)
    Ciclo: 1) Selecionar → 2) Confirmar resposta → 3) Próxima
    ========================================================= */
 (async () => {
@@ -85,7 +85,7 @@
 
     app.innerHTML = `
       <div class="prova-topo">
-        <img class="logo-prova" src="assets/logo.jpeg" alt="Quixelô">
+        <span class="logo-prova">🚗</span>
         <div class="contador-topo">
           <span>QUESTÃO <strong>${String(atual + 1).padStart(2, '0')}</strong> / ${N}</span>
           <div class="barra-progresso"><div class="fill" style="width:${pctProgresso}%"></div></div>
@@ -221,7 +221,7 @@
 
     app.innerHTML = `
       <div class="prova-topo">
-        <img class="logo-prova" src="assets/logo.jpeg" alt="Quixelô">
+        <span class="logo-prova">🚗</span>
         <div class="contador-topo"><span>PROVA FINALIZADA${porTempo ? ' — TEMPO ESGOTADO' : ''}</span></div>
         <div class="timer">✓</div>
       </div>

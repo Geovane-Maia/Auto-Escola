@@ -1,5 +1,5 @@
 /* =========================================================
-   Auto Escola Quixelô — Schema do banco (Supabase/Postgres)
+   Auto Escola ABCDETRAN — Schema do banco (Supabase/Postgres)
    Cole este arquivo inteiro no SQL Editor do Supabase e
    clique em "Run". As tabelas ficam acessíveis pela API REST
    com a chave anon (adequado para este projeto escolar).

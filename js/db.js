@@ -1,5 +1,5 @@
 /* =========================================================
-   Quixelô — Camada de dados
+   ABCDETRAN — Camada de dados
    Usa Supabase (Postgres + REST) quando configurado em
    js/config.js; caso contrário, localStorage (fallback).
    Todas as funções são async.

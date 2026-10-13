@@ -1,5 +1,5 @@
 /* =========================================================
-   Quixelô — painel.html (área do aluno)
+   ABCDETRAN — painel.html (área do aluno)
    ========================================================= */
 (async () => {
   await DB.seed();

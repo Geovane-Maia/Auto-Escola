@@ -1,5 +1,5 @@
 /* =========================================================
-   Quixelô — Simulado Final (Sindcfcs · adaptado ao Banco Nacional)
+   ABCDETRAN — Simulado Final (Sindcfcs · adaptado ao Banco Nacional)
    50 questões com gabarito; alternativas embaralhadas por rotação
    para distribuir a resposta certa entre A-D.
    Carregado ANTES de js/db.js (ver script nos HTML).

@@ -1,5 +1,5 @@
 /* =========================================================
-   Quixelô — index.html (login com teclado virtual)
+   ABCDETRAN — index.html (login com teclado virtual)
    ========================================================= */
 (async () => {
   await DB.seed();

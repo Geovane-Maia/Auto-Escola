@@ -1,5 +1,5 @@
 /* =========================================================
-   Quixelô — Placas de trânsito (arquivos em assets/placas/)
+   ABCDETRAN — Placas de trânsito (arquivos em assets/placas/)
    Diagramas oficiais do CTB via Wikimedia Commons
    (R-1, R-3, R-6a, R-7, R-9, R-10, R-25a, R-25c, R-26, R-29,
    R-34, R-37, R-38, A-2a, A-14, A-15, A-19, A-25, A-31,

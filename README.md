@@ -1,4 +1,4 @@
-# Auto Escola Quixelô — Simulados (padrão ABCDETRAN)
+# Auto Escola — Simulados ABCDETRAN
 
 Site de simulados do DETRAN em **HTML/CSS/JS puro**, seguindo exatamente o guia visual **ABCDETRAN** (paleta verde/laranja/azul e ciclo de 3 passos). Os dados usam **Supabase (PostgreSQL)** quando configurado — ou funcionam localmente no navegador como fallback.
 
@@ -10,7 +10,6 @@ auto_escola/
 ├── painel.html           → Área do aluno (boas-vindas, cadernos, histórico)
 ├── simulado.html         → Tela da prova (3 zonas: contexto / decisão / navegação)
 ├── admin.html            → Painel administrativo (CRUD completo)
-├── assets/logo.jpeg      → Logo oficial da Auto Escola Quixelô
 ├── css/
 │   ├── style.css         → Tema ABCDETRAN (paleta + botões + zonas da prova)
 │   └── admin.css         → Estilos extras do painel admin
@@ -20,7 +19,6 @@ auto_escola/
 │   ├── placas.js         → Mapa das 30 placas (arquivos em assets/placas/)
 │   ├── db.js             → Camada de dados (Supabase REST ou localStorage) + seed sem duplicar
 ├── assets/
-│   ├── logo.jpeg         → Logo oficial da Auto Escola Quixelô
 │   └── placas/           → 30 placas: diagramas oficiais do CTB (Wikimedia Commons, R/A) + 5 ilustrativas em SVG
 │   ├── auth.js           → Validação de CPF + sessão
 │   ├── main.js           → Login com teclado virtual
@@ -141,7 +139,7 @@ As imagens de sinalização em `assets/placas/` misturam diagramas oficiais do C
 cd auto_escola
 git init
 git add .
-git commit -m "Quixelô simulados — tema ABCDETRAN + CPF de teste"
+git commit -m "Simulados ABCDETRAN + CPF de teste"
 git branch -M main
 git remote add origin https://github.com/SEU-USUARIO/SEU-REPO.git
 git push -u origin main

@@ -1,5 +1,5 @@
 /* =========================================================
-   Quixelô — admin.html (CRUD, DB async)
+   ABCDETRAN — admin.html (CRUD, DB async)
    ========================================================= */
 (async () => {
   await DB.seed();
@@ -398,7 +398,7 @@
     const blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = `quixelo-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    a.download = `abcdetran-backup-${new Date().toISOString().slice(0, 10)}.json`;
     a.click();
     URL.revokeObjectURL(a.href);
   });
