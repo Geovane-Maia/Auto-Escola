@@ -1,5 +1,23 @@
 # Auto Escola — Simulados ABCDETRAN
 
+## ▶ Comece aqui (offline, sem internet)
+
+1. Baixe o ZIP do repositório e extraia a pasta.
+2. Dê **duplo clique** em `ABRIR-SIMULADO-OFFLINE.bat` (Windows) — ou abra `ABRIR-SIMULADO-OFFLINE.html` em qualquer sistema.
+3. Digite o CPF de teste `11111111111` no teclado virtual e clique na seta verde.
+
+> Funciona sem internet: a pasta `Simulados-Offline/` tem o sistema completo autocontido. O `ABRIR-SIMULADO-OFFLINE` só aponta para ela.
+
+## 📁 O que é cada coisa
+
+| Item | Para que serve |
+|------|----------------|
+| `ABRIR-SIMULADO-OFFLINE.bat` / `.html` | **Entrada do sistema offline (duplo clique)** |
+| `Simulados-Offline/` | Sistema pronto p/ usar sem internet (gerado por `build_offline.py`) |
+| `docs/` | Manual do aluno (PDF) e apresentação interativa (PPTX) |
+| `index.html`, `painel.html`, `simulado.html`, `admin.html` | Código-fonte do site (precisa de servidor local ou internet p/ nuvem) |
+| `supabase-schema.sql` | Banco na nuvem (opcional) |
+
 Site de simulados do DETRAN em **HTML/CSS/JS puro**, seguindo exatamente o guia visual **ABCDETRAN** (paleta verde/laranja/azul e ciclo de 3 passos). Os dados usam **Supabase (PostgreSQL)** quando configurado — ou funcionam localmente no navegador como fallback.
 
 ## 📁 Estrutura
@@ -118,11 +136,11 @@ Acesso: link "Área do administrador" no rodapé do login.
 
 ## 📕 Manual do aluno (PDF)
 
-O arquivo `Guia-do-Aluno-ABCDETRAN.pdf` traz toda a orientação de uso da plataforma de questionário (sem a parte de administrador): 5 etapas, 3 botões, teclado de CPF, 3 zonas da prova, regra de ouro, pendências, conclusão e check-list.
+O arquivo `docs/Guia-do-Aluno-ABCDETRAN.pdf` traz toda a orientação de uso da plataforma de questionário (sem a parte de administrador): 5 etapas, 3 botões, teclado de CPF, 3 zonas da prova, regra de ouro, pendências, conclusão e check-list.
 
 ## 📊 Apresentação interativa (PowerPoint)
 
-O arquivo `Apresentacao-Interativa-ABCDETRAN.pptx` (16 slides) ensina a usar o sistema de forma interativa:
+O arquivo `docs/Apresentacao-Interativa-ABCDETRAN.pptx` (16 slides) ensina a usar o sistema de forma interativa:
 
 - **Menu clicável** com 6 opções que saltam direto ao assunto.
 - **Quiz com escolhas:** 2 perguntas de múltipla escolha; cada alternativa é clicável e leva a um feedback de acerto (verde) ou erro (vermelho), com botões `Tentar de novo`, `Próxima` e `MENU`.
