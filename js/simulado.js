@@ -85,7 +85,7 @@
 
     app.innerHTML = `
       <div class="prova-topo">
-        <img class="logo-prova" src="assets/logo-renascer.png" alt="Autoescola Renascer">
+        <img class="logo-prova" src="assets/logo_renascer.png" onerror="this.onerror=null;this.src='assets/logo-renascer.svg'" alt="Autoescola Renascer">
         <div class="contador-topo">
           <span>QUESTÃO <strong>${String(atual + 1).padStart(2, '0')}</strong> / ${N}</span>
           <div class="barra-progresso"><div class="fill" style="width:${pctProgresso}%"></div></div>
@@ -221,7 +221,7 @@
 
     app.innerHTML = `
       <div class="prova-topo">
-        <img class="logo-prova" src="assets/logo-renascer.png" alt="Autoescola Renascer">
+        <img class="logo-prova" src="assets/logo_renascer.png" onerror="this.onerror=null;this.src='assets/logo-renascer.svg'" alt="Autoescola Renascer">
         <div class="contador-topo"><span>PROVA FINALIZADA${porTempo ? ' — TEMPO ESGOTADO' : ''}</span></div>
         <div class="timer">✓</div>
       </div>
