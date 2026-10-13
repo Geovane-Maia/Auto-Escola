@@ -65,6 +65,9 @@ def main():
         with open(os.path.join(RAIZ, pagina), encoding='utf-8') as f:
             html = f.read()
 
+        logo = data_url(os.path.join(RAIZ, 'assets', 'logo-renascer.png'))
+        html = html.replace('assets/logo-renascer.png', logo)
+
         for css in csss:
             with open(os.path.join(RAIZ, css), encoding='utf-8') as f:
                 conteudo = f.read()
@@ -80,6 +83,7 @@ def main():
                 with open(os.path.join(RAIZ, js), encoding='utf-8') as f:
                     conteudo = f.read()
             assert '</script' not in conteudo.lower(), js
+            conteudo = conteudo.replace('assets/logo-renascer.png', logo)
             tag = f'<script src="{js}"></script>'
             assert tag in html, (pagina, js)
             html = html.replace(tag, '<script>\n' + conteudo + '\n</script>')

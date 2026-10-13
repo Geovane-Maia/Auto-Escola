@@ -1,4 +1,4 @@
-# Auto Escola — Simulados ABCDETRAN
+# Autoescola Renascer — Simulados ABCDETRAN
 
 ## ▶ Comece aqui (offline, sem internet)
 
@@ -7,6 +7,10 @@
 3. Digite o CPF de teste `11111111111` no teclado virtual e clique na seta verde.
 
 > Funciona sem internet: a pasta `Simulados-Offline/` tem o sistema completo autocontido. O `ABRIR-SIMULADO-OFFLINE` só aponta para ela.
+
+## 📞 Contato
+
+Autoescola Renascer — (85) 99615-6124 · (88) 98233-2839 · (85) 98887-3335 · Instagram @autoescola_renascer
 
 ## 📁 O que é cada coisa
 
