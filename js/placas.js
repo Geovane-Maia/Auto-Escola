@@ -11,6 +11,7 @@
 const PLACAS = {
   seta: 'siga-frente.svg',
   proibido: 'proibido.svg',
+  'de-preferencia': 'de-preferencia.svg',
   advertencia: 'advertencia.svg',
   estacionamento: 'estacionamento.svg',
   pare: 'pare.svg',

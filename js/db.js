@@ -37,36 +37,27 @@ const DB = (() => {
     return r.status === 204 ? [] : r.json();
   }
 
-  /* Normaliza enunciado para detectar repetidas (acentos/caixa/pontuação) */
-  function normEnun(s) {
-    return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-      .replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
-  }
+  /* Versão do banco: troca integral ao mudar (ex.: simulado final) */
+  const VERSAO_BANCO = 'sindcfcs-50';
+  const K_VERSAO = 'qx_seed_versao';
 
-  /* Banco completo: 30 originais + Banco Nacional (db.js + banco-questoes.js) */
+  /* Banco vigente: Simulado Final em js/banco-questoes.js */
   function todasSeed() {
-    const novas = (typeof PERGUNTAS_NOVAS !== 'undefined' && Array.isArray(PERGUNTAS_NOVAS)) ? PERGUNTAS_NOVAS : [];
-    return [...PERGUNTAS_SEED, ...novas];
+    return (typeof PERGUNTAS_NOVAS !== 'undefined' && Array.isArray(PERGUNTAS_NOVAS)) ? PERGUNTAS_NOVAS : [];
   }
 
-  /* Enunciados descartados (fora do padrão DETRAN) — removidos de quem já os tem */
-  const ENUNCIADOS_REMOVIDOS = new Set(
-    ['O sinal triangular com borda vermelha é de:'].map(normEnun)
-  );
-
-  /* Completa a lista com as questões do seed que ainda faltam (sem duplicar) */
-  function mesclarSeed(lista) {
-    const out = (lista || [])
-      .map(p => (p && !p.id) ? { ...p, id: uid() } : p)
-      .filter(p => !ENUNCIADOS_REMOVIDOS.has(normEnun(p.enunciado)));
-    const vistos = new Set(out.map(p => normEnun(p.enunciado)));
-    for (const p of todasSeed()) {
-      if (!vistos.has(normEnun(p.enunciado))) {
-        vistos.add(normEnun(p.enunciado));
-        out.push({ id: uid(), ...p });
-      }
+  async function apagaTudoNuvem() {
+    const todas = await api('GET', 'perguntas?select=id');
+    for (let i = 0; i < todas.length; i += 10) {
+      await Promise.all(todas.slice(i, i + 10).map(p => api('DELETE', 'perguntas?id=eq.' + encodeURIComponent(p.id))));
     }
-    return out;
+  }
+
+  async function insereTudoNuvem() {
+    const todas = todasSeed();
+    for (let i = 0; i < todas.length; i += 20) {
+      await api('POST', 'perguntas', todas.slice(i, i + 20).map(p => ({ id: uid(), ...p })));
+    }
   }
 
   /* ---------- seed ---------- */
@@ -76,9 +67,11 @@ const DB = (() => {
       if (!localStorage.getItem(K.admins)) {
         gravarLocal(K.admins, [{ id: uid(), usuario: 'admin', senha: 'admin123', nome: 'Administrador', criadoEm: new Date().toISOString() }]);
       }
-      // perguntas: cria ou completa sem duplicar (migra quem já tinha as 30 antigas)
-      const atuais = lerLocal(K.perguntas, null);
-      gravarLocal(K.perguntas, mesclarSeed(atuais || []));
+      // troca integral do banco quando a versão muda (remove as anteriores)
+      if (lerLocal(K_VERSAO, '') !== VERSAO_BANCO) {
+        gravarLocal(K.perguntas, todasSeed().map(p => ({ id: uid(), ...p })));
+        gravarLocal(K_VERSAO, VERSAO_BANCO);
+      }
       // CPF padrão de teste com perfil Administrador
       const alunosLocal = lerLocal(K.alunos, []);
       if (!alunosLocal.some(a => a.cpf === CPF_TESTE)) {
@@ -97,26 +90,11 @@ const DB = (() => {
     if (!alunoTeste.length) {
       await api('POST', 'alunos', [{ id: uid(), nome: 'Administrador', cpf: CPF_TESTE, turma: 'Administrador', ativo: true }]);
     }
-    const pergs = await api('GET', 'perguntas?select=id,enunciado');
-    // remove questões descartadas (fora do padrão DETRAN)
-    for (const p of pergs) {
-      if (ENUNCIADOS_REMOVIDOS.has(normEnun(p.enunciado))) {
-        await api('DELETE', 'perguntas?id=eq.' + encodeURIComponent(p.id));
-      }
-    }
-    if (!pergs.length) {
-      // banco vazio: insere tudo em lotes de 20
-      const todas = todasSeed();
-      for (let i = 0; i < todas.length; i += 20) {
-        await api('POST', 'perguntas', todas.slice(i, i + 20).map(p => ({ id: uid(), ...p })));
-      }
-    } else {
-      // completa com as questões do seed que ainda faltam (sem duplicar)
-      const vistos = new Set(pergs.map(p => normEnun(p.enunciado)));
-      const faltam = todasSeed().filter(p => !vistos.has(normEnun(p.enunciado)));
-      for (let i = 0; i < faltam.length; i += 20) {
-        await api('POST', 'perguntas', faltam.slice(i, i + 20).map(p => ({ id: uid(), ...p })));
-      }
+    // troca integral do banco quando a versão muda (remove as anteriores)
+    if (lerLocal(K_VERSAO, '') !== VERSAO_BANCO) {
+      await apagaTudoNuvem();
+      await insereTudoNuvem();
+      gravarLocal(K_VERSAO, VERSAO_BANCO);
     }
   }
 
@@ -241,46 +219,3 @@ const DB = (() => {
 
   return { seed, alunos, admins, perguntas, resultados, uid, temNuvem };
 })();
-
-/* ---------- banco de perguntas inicial (30) ---------- */
-const PERGUNTAS_SEED = [
-  /* Legislação (8) */
-  { categoria: 'Legislação', enunciado: 'A velocidade máxima permitida em vias urbanas, salvo sinalização específica, é de:', alternativas: ['60 km/h', '80 km/h', '40 km/h', '100 km/h'], correta: 0 },
-  { categoria: 'Legislação', enunciado: 'Ao encontrar sinal vermelho de semáforo, o motorista deve:', alternativas: ['Acelerar para passar antes', 'Parar antes da faixa de parada e aguardar', 'Tocar a buzina', 'Segurar pela contramão'], correta: 1 },
-  { categoria: 'Legislação', enunciado: 'Estacionar sobre calçada de acesso a garagem é:', alternativas: ['Permitido por até 5 minutos', 'Permitido se o motorista estiver no veículo', 'Proibido', 'Permitido à noite'], correta: 2 },
-  { categoria: 'Legislação', enunciado: 'O uso do cinto de segurança é obrigatório:', alternativas: ['Apenas em vias rápidas', 'Apenas para o motorista', 'Para todos os ocupantes do veículo', 'Somente em vias urbanas'], correta: 2 },
-  { categoria: 'Legislação', enunciado: 'Dirigir sob influência de álcool:', alternativas: ['É permitido se a ingestão for pequena', 'É proibido e sujeito a multa, suspensão e prisão', 'É permitido à noite', 'É permitido em vias pouco movimentadas'], correta: 1 },
-  { categoria: 'Legislação', enunciado: 'A faixa de pedestres (zebrado) serve para:', alternativas: ['Estacionar motocicletas', 'Uso exclusivo de pedestres cruzarem a via', 'Circulação de bicicletas', 'Parada de ônibus'], correta: 1 },
-  { categoria: 'Legislação', enunciado: 'A ultrapassagem em curva ou lombada:', alternativas: ['É permitida com atenção', 'É proibida', 'É permitida à noite', 'É permitida se a via for larga'], correta: 1 },
-  { categoria: 'Legislação', enunciado: 'O trânsito de pedestres em via rápida é permitido:', alternativas: ['Em qualquer ponto', 'Somente em faixas de pedestres, passarelas ou túneis', 'Somente à noite', 'É sempre proibido'], correta: 1 },
-
-  /* Sinalização (6) */
-  { categoria: 'Sinalização', enunciado: 'Em uma via urbana, a placa de regulamentação indica...', imagem: 'seta', alternativas: ['Sentido obrigatório seguir em frente.', 'Proibido seguir em frente.', 'Sentido permitido à esquerda.', 'Trânsito em ambos os sentidos.'], correta: 0 },
-  { categoria: 'Sinalização', enunciado: 'O sinal circular vermelho com uma faixa horizontal branca significa:', imagem: 'proibido', alternativas: ['Parada obrigatória', 'Ceda passagem', 'Sentido proibido', 'Velocidade máxima'], correta: 2 },
-  { categoria: 'Sinalização', enunciado: 'O sinal em losango amarelo é de:', imagem: 'advertencia', alternativas: ['Advertência', 'Obrigação', 'Indicação', 'Serviços'], correta: 0 },
-  { categoria: 'Sinalização', enunciado: 'A placa azul quadrada com a letra "P" indica:', imagem: 'estacionamento', alternativas: ['Proibido estacionar', 'Estacionamento permitido', 'Parada obrigatória', 'Ponto de ônibus'], correta: 1 },
-  { categoria: 'Sinalização', enunciado: 'O piso com faixas diagonais brancas (zebrado) junto à borda da via indica:', alternativas: ['Área de lazer', 'Faixa de retenção — não estacionar nem parar', 'Faixa de pedestres', 'Entrada de garagem'], correta: 1 },
-  { categoria: 'Sinalização', enunciado: 'A placa vermelha redonda com um caminhão preto e uma faixa vermelha significa:', imagem: 'proibido-caminhoes', alternativas: ['Proibido o trânsito de caminhões', 'Área de carga', 'Estacionamento para caminhões', 'Via de caminhões preferencial'], correta: 0 },
-
-  /* Direção Defensiva (6) */
-  { categoria: 'Direção Defensiva', enunciado: 'A distância de seguimento segura depende de:', alternativas: ['Somente da velocidade', 'Velocidade, tempo de reação e condições do piso', 'Apenas do tipo de veículo', 'Da vontade do motorista'], correta: 1 },
-  { categoria: 'Direção Defensiva', enunciado: 'Ao dirigir sob chuva, o motorista deve:', alternativas: ['Manter a mesma velocidade', 'Reduzir a velocidade e aumentar a distância', 'Acender o pisca-alerta permanentemente', 'Circular na contramão'], correta: 1 },
-  { categoria: 'Direção Defensiva', enunciado: '"Ponto cego" é a área:', alternativas: ['Visível pelos espelhos', 'Não coberta pelos espelhos retrovisores', 'Frente ao veículo', 'Atrás do veículo apenas'], correta: 1 },
-  { categoria: 'Direção Defensiva', enunciado: 'O que fazer antes de mudar de faixa?', alternativas: ['Buzinar', 'Sinalizar com a seta e conferir os espelhos', 'Acelerar', 'Fechar os olhos'], correta: 1 },
-  { categoria: 'Direção Defensiva', enunciado: 'Dirigir com sono é perigoso porque:', alternativas: ['Aumenta o consumo de combustível', 'Reduz o tempo de reação e a atenção', 'Desgasta os pneus', 'Nada acontece'], correta: 1 },
-  { categoria: 'Direção Defensiva', enunciado: 'Em descidas longas, o motorista deve:', alternativas: ['Segurar o freio continuamente', 'Usar o freio-motor (marchas reduzidas) e frear em pulsos', 'Desligar o motor', 'Colocar neutro'], correta: 1 },
-
-  /* Primeiros Socorros (5) */
-  { categoria: 'Primeiros Socorros', enunciado: 'Em caso de acidente, o PRIMEIRO passo é:', alternativas: ['Remover a vítima imediatamente', 'Sinalizar o local e chamar o SAMU (192)', 'Tirar fotos', 'Esperar alguém passar'], correta: 1 },
-  { categoria: 'Primeiros Socorros', enunciado: 'Vítima inconsciente mas respirando deve ser colocada em:', alternativas: ['Posição de sentado', 'Posição lateral de segurança', 'De barriga para baixo', 'De cabeça baixa'], correta: 1 },
-  { categoria: 'Primeiros Socorros', enunciado: 'Sangramento intenso de um braço deve ser controlado:', alternativas: ['Apertando com os dedos', 'Com torniquete improvisado, se necessário, e pressão direta', 'Aplicando gelo', 'Esperando parar sozinho'], correta: 1 },
-  { categoria: 'Primeiros Socorros', enunciado: 'Número do SAMU é:', alternativas: ['190', '192', '193', '180'], correta: 1 },
-  { categoria: 'Primeiros Socorros', enunciado: 'Em caso de suspeita de lesão na coluna, o socorrista deve:', alternativas: ['Movimentar a vítima para local seguro', 'Manter a vítima imóvel e aguardar os socorros', 'Sentar a vítima', 'Dar água à vítima'], correta: 1 },
-
-  /* Mecânica Básica (5) */
-  { categoria: 'Mecânica Básica', enunciado: 'A luz vermelha de óleo acesa no painel indica:', alternativas: ['Combustível baixo', 'Problema de lubrificação — pare o veículo imediatamente', 'Pneu furado', 'Bateria fraca'], correta: 1 },
-  { categoria: 'Mecânica Básica', enunciado: 'A calibragem correta dos pneus:', alternativas: ['Deve ser sempre acima do indicado', 'Deve seguir o manual do fabricante', 'Não importa', 'Deve ser mínima possível'], correta: 1 },
-  { categoria: 'Mecânica Básica', enunciado: 'O radiador do veículo tem função de:', alternativas: ['Arrefecer o motor', 'Gerar energia', 'Acelerar o carro', 'Filtrar o ar'], correta: 0 },
-  { categoria: 'Mecânica Básica', enunciado: 'Cinto de segurança com defeito no estribo:', alternativas: ['Pode continuar usado', 'Deve ser reparado ou substituído imediatamente', 'Só funciona no banco traseiro', 'Nada afeta'], correta: 1 },
-  { categoria: 'Mecânica Básica', enunciado: 'Bateria descarregada pode ser identificada por:', alternativas: ['Faróis fracos ao ligar e clique ao dar partida', 'Pneus murcho', 'Ruído no freio', 'Óleo escuro'], correta: 0 }
-];
