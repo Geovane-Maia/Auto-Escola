@@ -215,6 +215,13 @@ label { display: block; font-size: .9rem; font-weight: 600; margin: 14px 0 6px; 
 .btn-audio:hover { filter: brightness(1.08); }
 .btn-audio:active { transform: translateY(2px); border-bottom-width: 2px; }
 .btn-audio.tocando { background: var(--laranja); border-bottom-color: var(--laranja-esc); }
+
+/* ---------- Acessibilidade ---------- */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+.cartao-resp { position: relative; }
 .login-footer { text-align: center; margin-top: 16px; }
 
 /* =========================================================
@@ -1247,10 +1254,16 @@ const Auth = {
   let lendo = false;
   let btn = null;
 
+  function textoDe(el) {
+    const clone = el.cloneNode(true);
+    clone.querySelectorAll('[aria-hidden="true"], script, style').forEach(n => n.remove());
+    return clone.textContent.replace(/\s+/g, ' ').trim();
+  }
+
   function textosParaLer() {
     return [...document.querySelectorAll('[data-audio]')]
       .filter(e => e.offsetParent !== null)
-      .map(e => e.textContent.replace(/\s+/g, ' ').trim())
+      .map(textoDe)
       .filter(Boolean)
       .join('. ');
   }

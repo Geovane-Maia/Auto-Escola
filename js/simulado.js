@@ -104,10 +104,11 @@
 
       <div class="grade-respostas">
         ${p.alternativas.map((alt, i) => `
-          <button class="cartao-resp ${est.selecionada === i ? 'selecionada' : ''}" data-i="${i}">
-            <span class="letra">${LETRAS[i]}</span>
-            <span class="texto-resp" data-audio>${escHtml(alt)}</span>
-            <span class="radio"></span>
+          <button class="cartao-resp ${est.selecionada === i ? 'selecionada' : ''}" data-i="${i}" data-audio>
+            <span class="sr-only">Alternativa ${LETRAS[i]}: </span>
+            <span class="letra" aria-hidden="true">${LETRAS[i]}</span>
+            <span class="texto-resp">${escHtml(alt)}</span>
+            <span class="radio" aria-hidden="true"></span>
           </button>
         `).join('')}
       </div>

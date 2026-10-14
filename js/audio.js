@@ -8,10 +8,16 @@
   let lendo = false;
   let btn = null;
 
+  function textoDe(el) {
+    const clone = el.cloneNode(true);
+    clone.querySelectorAll('[aria-hidden="true"], script, style').forEach(n => n.remove());
+    return clone.textContent.replace(/\s+/g, ' ').trim();
+  }
+
   function textosParaLer() {
     return [...document.querySelectorAll('[data-audio]')]
       .filter(e => e.offsetParent !== null)
-      .map(e => e.textContent.replace(/\s+/g, ' ').trim())
+      .map(textoDe)
       .filter(Boolean)
       .join('. ');
   }
