@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Autoescola Renascer — Simulados ABCDETRAN</title>
+  <title data-titulo="Simulados ABCDETRAN">Autoescola Renascer — Simulados ABCDETRAN</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="page-login">
@@ -11,10 +11,10 @@
   <div class="login-wrap">
     <div class="login-card">
       <div class="login-topo">
-        <img class="logo-img" src="assets/logo_renascer.png" onerror="this.onerror=null;this.src='assets/logo-renascer.svg'" alt="Autoescola Renascer">
+        <img class="logo-img" data-escola="logo" src="assets/logo_renascer.png" onerror="this.onerror=null;this.src='assets/logo-renascer.svg'" alt="Autoescola Renascer">
         <div>
-          <h1>Autoescola Renascer</h1>
-          <p>SIMULADOS ABCDETRAN</p>
+          <h1 data-escola="nome">Autoescola Renascer</h1>
+          <p data-escola="slogan">SIMULADOS ABCDETRAN</p>
         </div>
       </div>
 
@@ -43,7 +43,7 @@
     </div>
 
     <footer class="login-footer">
-      <p class="login-contato">(85) 99615-6124 · (88) 98233-2839 · (85) 98887-3335<br>@autoescola_renascer</p>
+      <p class="login-contato" data-escola="contato">(85) 99615-6124 · (88) 98233-2839 · (85) 98887-3335<br>@autoescola_renascer</p>
       <button id="link-admin" class="btn-link">Área do administrador</button>
     </footer>
   </div>
@@ -73,5 +73,7 @@
   <script src="js/auth.js"></script>
   <script src="js/main.js"></script>
   <script src="js/audio.js"></script>
+  <script src="js/escola-dados.js"></script>
+  <script src="js/escola.js"></script>
 </body>
 </html>

@@ -21,6 +21,7 @@ Autoescola Renascer — (85) 99615-6124 · (88) 98233-2839 · (85) 98887-3335 ·
 | Botão 🔊 | **Leitura em áudio** da página (enunciados, alternativas e avisos) — funciona offline |
 | `docs/` | Manual do aluno (PDF) e apresentação interativa (PPTX) |
 | `index.html`, `painel.html`, `simulado.html`, `admin.html` | Código-fonte do site (precisa de servidor local ou internet p/ nuvem) |
+| `TROCAR-ESCOLA.md` | **Procedimento para trocar de autoescola (nome, logo, contatos)** |
 | `supabase-schema.sql` | Banco na nuvem (opcional) |
 
 Site de simulados do DETRAN em **HTML/CSS/JS puro**, seguindo exatamente o guia visual **ABCDETRAN** (paleta verde/laranja/azul e ciclo de 3 passos). Os dados usam **Supabase (PostgreSQL)** quando configurado — ou funcionam localmente no navegador como fallback.

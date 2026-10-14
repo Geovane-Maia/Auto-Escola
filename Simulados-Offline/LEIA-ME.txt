@@ -1,4 +1,4 @@
-SIMULADOS ABCDETRAN — VERSÃO OFFLINE
+AUTOESCOLA RENASCER — VERSÃO OFFLINE
 ====================================
 1. Dê duplo clique em index.html (não precisa de internet).
 2. CPF de teste: 11111111111 (11 dígitos) + seta verde.

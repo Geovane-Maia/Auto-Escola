@@ -16,16 +16,20 @@ DEST = os.path.join(RAIZ, 'Simulados-Offline')
 PAGINAS = {
     'index.html': (['css/style.css'],
                    ['js/config.js', 'js/banco-questoes.js', 'js/placas.js',
-                    'js/db.js', 'js/auth.js', 'js/main.js', 'js/audio.js']),
+                    'js/db.js', 'js/auth.js', 'js/main.js', 'js/audio.js',
+                    'js/escola-dados.js', 'js/escola.js']),
     'painel.html': (['css/style.css'],
                     ['js/config.js', 'js/banco-questoes.js', 'js/placas.js',
-                     'js/db.js', 'js/auth.js', 'js/painel.js', 'js/audio.js']),
+                     'js/db.js', 'js/auth.js', 'js/painel.js', 'js/audio.js',
+                     'js/escola-dados.js', 'js/escola.js']),
     'simulado.html': (['css/style.css'],
                       ['js/config.js', 'js/banco-questoes.js', 'js/placas.js',
-                       'js/db.js', 'js/auth.js', 'js/simulado.js', 'js/audio.js']),
+                       'js/db.js', 'js/auth.js', 'js/simulado.js', 'js/audio.js',
+                       'js/escola-dados.js', 'js/escola.js']),
     'admin.html': (['css/style.css', 'css/admin.css'],
                    ['js/config.js', 'js/banco-questoes.js', 'js/placas.js',
-                    'js/db.js', 'js/auth.js', 'js/admin.js', 'js/audio.js']),
+                    'js/db.js', 'js/auth.js', 'js/admin.js', 'js/audio.js',
+                    'js/escola-dados.js', 'js/escola.js']),
 }
 
 CONFIG_OFFLINE = ("/* Configuração fixa do modo offline: sempre local. */\n"
@@ -68,6 +72,8 @@ def main():
         logo_oficial = os.path.join(RAIZ, 'assets', 'logo_renascer.png')
         logo_reserva = os.path.join(RAIZ, 'assets', 'logo-renascer.svg')
         logo = data_url(logo_oficial if os.path.exists(logo_oficial) else logo_reserva)
+        # no offline a logo sempre vai embutida: dispensa o fallback externo
+        html = html.replace(" onerror=\"this.onerror=null;this.src='assets/logo-renascer.svg'\"", "")
         html = html.replace('assets/logo_renascer.png', logo)
         html = html.replace('assets/logo-renascer.svg', logo)
 
@@ -86,6 +92,7 @@ def main():
                 with open(os.path.join(RAIZ, js), encoding='utf-8') as f:
                     conteudo = f.read()
             assert '</script' not in conteudo.lower(), js
+            conteudo = conteudo.replace(" onerror=\"this.onerror=null;this.src='assets/logo-renascer.svg'\"", "")
             conteudo = conteudo.replace('assets/logo_renascer.png', logo)
             conteudo = conteudo.replace('assets/logo-renascer.svg', logo)
             tag = f'<script src="{js}"></script>'
@@ -108,7 +115,9 @@ def main():
             f.write(html)
         print(f'{pagina}: {os.path.getsize(os.path.join(DEST, pagina)) // 1024} KB')
 
-    leia = ('SIMULADOS ABCDETRAN — VERSÃO OFFLINE\n'
+    from ler_escola import ler_escola
+    nome_escola = ler_escola().get('nome', 'Simulados ABCDETRAN')
+    leia = (f'{nome_escola.upper()} — VERSÃO OFFLINE\n'
             '====================================\n'
             '1. Dê duplo clique em index.html (não precisa de internet).\n'
             '2. CPF de teste: 11111111111 (11 dígitos) + seta verde.\n'

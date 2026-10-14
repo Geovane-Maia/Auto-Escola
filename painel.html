@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meu caderno — Autoescola Renascer</title>
+  <title data-titulo="Meu caderno">Meu caderno — Autoescola Renascer</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -11,8 +11,8 @@
   <header class="topo">
     <div class="topo-inner">
       <a class="marca" href="painel.html">
-        <img class="mini-logo" src="assets/logo_renascer.png" onerror="this.onerror=null;this.src='assets/logo-renascer.svg'" alt="Autoescola Renascer">
-        <strong>Renascer · ABCDETRAN</strong>
+        <img class="mini-logo" data-escola="logo" src="assets/logo_renascer.png" onerror="this.onerror=null;this.src='assets/logo-renascer.svg'" alt="Autoescola Renascer">
+        <strong data-escola="marca">Renascer · ABCDETRAN</strong>
       </a>
       <div class="topo-acoes">
         <span class="topo-usuario" id="nome-aluno"></span>
@@ -53,5 +53,7 @@
   <script src="js/auth.js"></script>
   <script src="js/painel.js"></script>
   <script src="js/audio.js"></script>
+  <script src="js/escola-dados.js"></script>
+  <script src="js/escola.js"></script>
 </body>
 </html>
