@@ -99,14 +99,14 @@
 
       <div class="cartao-questao">
         ${imagemQuestaoHTML(p)}
-        <p class="enunciado">${escHtml(p.enunciado)}</p>
+        <p class="enunciado" data-audio>${escHtml(p.enunciado)}</p>
       </div>
 
       <div class="grade-respostas">
         ${p.alternativas.map((alt, i) => `
           <button class="cartao-resp ${est.selecionada === i ? 'selecionada' : ''}" data-i="${i}">
             <span class="letra">${LETRAS[i]}</span>
-            <span class="texto-resp">${escHtml(alt)}</span>
+            <span class="texto-resp" data-audio>${escHtml(alt)}</span>
             <span class="radio"></span>
           </button>
         `).join('')}
@@ -226,11 +226,11 @@
         <div class="timer">✓</div>
       </div>
       <div class="tela-conclusao">
-        <div class="faixa-concluida">Disciplina concluída! »</div>
+        <div class="faixa-concluida" data-audio>Disciplina concluída! »</div>
         <div class="card-resultado">
           <div class="nota-grande">${pct}%</div>
           <div class="selo ${aprovado ? 'aprovado' : 'reprovado'}">${aprovado ? '✔ APROVADO' : '✘ REPROVADO'}</div>
-          <p class="resultado-detalhes">Você acertou <strong>${acertos}</strong> de <strong>${N}</strong> questões — mínimo de <strong>70%</strong> para aprovação.</p>
+          <p class="resultado-detalhes" data-audio>Você acertou <strong>${acertos}</strong> de <strong>${N}</strong> questões — mínimo de <strong>70%</strong> para aprovação.</p>
           <div class="resultado-acoes">
             <a class="btn btn-primario" href="painel.html">Voltar ao caderno</a>
             <button class="btn btn-secundario" id="btn-gabarito">Ver gabarito</button>

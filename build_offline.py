@@ -16,16 +16,16 @@ DEST = os.path.join(RAIZ, 'Simulados-Offline')
 PAGINAS = {
     'index.html': (['css/style.css'],
                    ['js/config.js', 'js/banco-questoes.js', 'js/placas.js',
-                    'js/db.js', 'js/auth.js', 'js/main.js']),
+                    'js/db.js', 'js/auth.js', 'js/main.js', 'js/audio.js']),
     'painel.html': (['css/style.css'],
                     ['js/config.js', 'js/banco-questoes.js', 'js/placas.js',
-                     'js/db.js', 'js/auth.js', 'js/painel.js']),
+                     'js/db.js', 'js/auth.js', 'js/painel.js', 'js/audio.js']),
     'simulado.html': (['css/style.css'],
                       ['js/config.js', 'js/banco-questoes.js', 'js/placas.js',
-                       'js/db.js', 'js/auth.js', 'js/simulado.js']),
+                       'js/db.js', 'js/auth.js', 'js/simulado.js', 'js/audio.js']),
     'admin.html': (['css/style.css', 'css/admin.css'],
                    ['js/config.js', 'js/banco-questoes.js', 'js/placas.js',
-                    'js/db.js', 'js/auth.js', 'js/admin.js']),
+                    'js/db.js', 'js/auth.js', 'js/admin.js', 'js/audio.js']),
 }
 
 CONFIG_OFFLINE = ("/* Configuração fixa do modo offline: sempre local. */\n"

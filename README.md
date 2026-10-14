@@ -18,6 +18,7 @@ Autoescola Renascer — (85) 99615-6124 · (88) 98233-2839 · (85) 98887-3335 ·
 |------|----------------|
 | `ABRIR-SIMULADO-OFFLINE.bat` / `.html` | **Entrada do sistema offline (duplo clique)** |
 | `Simulados-Offline/` | Sistema pronto p/ usar sem internet (gerado por `build_offline.py`) |
+| Botão 🔊 | **Leitura em áudio** da página (enunciados, alternativas e avisos) — funciona offline |
 | `docs/` | Manual do aluno (PDF) e apresentação interativa (PPTX) |
 | `index.html`, `painel.html`, `simulado.html`, `admin.html` | Código-fonte do site (precisa de servidor local ou internet p/ nuvem) |
 | `supabase-schema.sql` | Banco na nuvem (opcional) |
